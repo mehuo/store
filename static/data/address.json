@@ -1,0 +1,52 @@
+[
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":1
+	},
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":0
+	},
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":0
+	},
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":0
+	},
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":0
+	},
+	{
+		"addressId" : 1,
+		"userName":"JackBean",
+		"streetName":"北京市朝阳区朝阳公园",
+		"postCode":"100001",
+		"tel" : "18709090099",
+		"isDefault":0
+	}
+
+
+]
