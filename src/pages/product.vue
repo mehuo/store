@@ -71,12 +71,15 @@
     height: 36px;
     margin-bottom: 20px;
 }
+.search-box{
+	width: 900px;
+}
 
 </style>
 
 <template>
 	<div class="product">
-		<div class="search-box">
+		<div class="search-box clearfix">
 			<div class="page-search">
 		        <div class="form-group">
 		            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">

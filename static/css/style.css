@@ -110,13 +110,5 @@ body{
     border-radius:0;
 
 }
-.filter-group-default .item.active:before{
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  left: 0;
-  top: 100%;
-  background: #fff;
-}
+
 /*筛选条件 END*/
