@@ -2,6 +2,9 @@
 .product{
 
 }
+.product .productlist{
+	margin-top: 24px;
+}
 .product .left{
 	width: 75%;
 	float: left;
@@ -65,7 +68,7 @@
     font-size: 16px;
     font-weight: bold;
     border-bottom: solid 1px #cdcdcd;
-    height: 33px;
+    height: 36px;
     margin-bottom: 20px;
 }
 
@@ -73,52 +76,62 @@
 
 <template>
 	<div class="product">
-		<div class="left">
-			<div>
-			    <div class="page-search">
-			        <div class="form-group">
-			            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">
-			            <button class="btn search" type="submit">搜索</button>
-		                
-			        </div>
+		<div class="search-box">
+			<div class="page-search">
+		        <div class="form-group">
+		            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">
+		            <button class="btn search" type="submit">搜索</button>
+		        </div>
+		    </div>
+		</div>
+		<div class="productlist">
+			<div class="left">
+				<div class="filter-group-default" role="group">
+			        <button type="button" class="item" :class="{'active':currentType == 0}"  @click="changeType(0)">
+			            全部商品
+			        </button>
+			        <button type="button" class="item" :class="{'active':currentType == 1}"  @click="changeType(1)">
+			            二手
+			        </button>
 			    </div>
-			</div>
-			<div class="list">
-				<div class="item" v-for="item in productList">
-					<img :src="item.images[0]" alt="">
-					<div class="info">
-						<div class="clearfix">
-							<span class="price fl">{{item.price | money}}</span>
-							<span class="payer fr">{{item.payers}}已付款</span>
+				<div class="list">
+					<div class="item" v-for="item in productList">
+						<img :src="item.images[0]" alt="">
+						<div class="info">
+							<div class="clearfix">
+								<span class="price fl">{{item.price | money}}</span>
+								<span class="payer fr">{{item.payers}}已付款</span>
+							</div>
+							<div class="name">{{item.name}}</div>
+							<div class="clearfix payer">
+								<span class="fl">{{item.shop}}</span>
+								<span class="fr">{{item.shop_address}}</span>
+							</div>
 						</div>
-						<div class="name">{{item.name}}</div>
-						<div class="clearfix payer">
-							<span class="fl">{{item.shop}}</span>
-							<span class="fr">{{item.shop_address}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="right adbox">
+				<div class="title">品牌精选</div>
+				<div class="list">
+					<div class="item itad" v-for="item in addProductList">
+						<img :src="item.images[0]" alt="">
+						<div class="info">
+							<div class="clearfix">
+								<span class="price fl">{{item.price | money}}</span>
+								<span class="payer fr">{{item.payers}}已付款</span>
+							</div>
+							<div class="name">{{item.name}}</div>
+							<div class="clearfix payer">
+								<span class="fl">{{item.shop}}</span>
+								<span class="fr">{{item.shop_address}}</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="right adbox">
-			<div class="title">品牌精选</div>
-			<div class="list">
-				<div class="item itad" v-for="item in addProductList">
-					<img :src="item.images[0]" alt="">
-					<div class="info">
-						<div class="clearfix">
-							<span class="price fl">{{item.price | money}}</span>
-							<span class="payer fr">{{item.payers}}已付款</span>
-						</div>
-						<div class="name">{{item.name}}</div>
-						<div class="clearfix payer">
-							<span class="fl">{{item.shop}}</span>
-							<span class="fr">{{item.shop_address}}</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </template>
 
@@ -127,6 +140,7 @@
 export default{
 	data(){
 		return {
+			currentType : 1,
 			productList : []
 		}
 	},
@@ -150,6 +164,10 @@ export default{
 					that.productList = res.data;
 				}
 			})
+		},
+		changeType:function(type){
+			this.currentType = type;
+
 		}
 	}
 }
