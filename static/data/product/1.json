@@ -16,6 +16,12 @@
 		{"color" : "黑色"},
 		{"color" : "藏青色"}
 	],
+	"part":[
+			{
+				"partId":1,
+				"partName":"腰带"
+			}
+		],
 	"images" :[
 		"https://img.alicdn.com/imgextra/i3/3357589328/TB2jTuhX6ZnyKJjSZFxXXabIpXa_!!3357589328.jpg_430x430q90.jpg",
 		"https://img.alicdn.com/imgextra/i1/3357589328/TB2B_bFjyCYBuNkSnaVXXcMsVXa_!!3357589328.jpg_430x430q90.jpg",

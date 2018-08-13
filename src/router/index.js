@@ -27,7 +27,7 @@ export default new Router({
       component: ProductDetail
     },
     {
-      path: '/shopcart',
+      path: '/shopcart?tag=:id&size=:size&color=:color',
       name: 'ShopCart',
       component: ShopCart
     },

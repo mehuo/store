@@ -3,6 +3,6 @@ export default{
 		if(typeof value == 'string'){
 			value = Number(value);
 		}
-		return '¥' +value.toFixed(2);
+		return '¥' + value.toFixed(2);
 	}
 }

@@ -98,23 +98,24 @@
 			        </button>
 			    </div>
 				<div class="list">
-					<router-link class="item" v-for="(item,index) in productList" 
-					:to="{name:'ProductDetail',params :{id:item.id,index:index}}">
-						<div>
-							<img :src="item.images[0]" alt="">
-							<div class="info">
-								<div class="clearfix">
-									<span class="price fl">{{item.price | money}}</span>
-									<span class="payer fr">{{item.payers}}已付款</span>
-								</div>
-								<div class="name">{{item.name}}</div>
-								<div class="clearfix payer">
-									<span class="fl">{{item.shop}}</span>
-									<span class="fr">{{item.shop_address}}</span>
+					<div class="item" v-for="(item,index) in productList">
+						<router-link :to="{name:'ProductDetail',params :{id:item.id,index:index}}">
+							<div>
+								<img :src="item.images[0]" alt="">
+								<div class="info">
+									<div class="clearfix">
+										<span class="price fl">{{item.price | money}}</span>
+										<span class="payer fr">{{item.payers}}已付款</span>
+									</div>
+									<div class="name">{{item.name}}</div>
+									<div class="clearfix payer">
+										<span class="fl">{{item.shop}}</span>
+										<span class="fr">{{item.shop_address}}</span>
+									</div>
 								</div>
 							</div>
-						</div>
-					</router-link>
+						</router-link>
+					</div>
 				</div>
 			</div>
 			<div class="right adbox">

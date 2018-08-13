@@ -109,14 +109,14 @@
   			</tr>
   		</thead>
   		<tbody>
-  			<tr v-for="(item,index) in cartList">
+  			<tr v-if="cartList.length>0" v-for="(item,index) in cartList">
   				<td>
   					<input class="isOn" type="checkbox" v-model="item.check" v-on:click="selectThis(item)">
-  					<img class="image" :src="item.image" alt="">
+  					<img class="image" :src="item.images[0]" alt="">
   				</td>
   				<td class="productinfo">
 					<div class="name">{{item.name}}</div>
-					<div class="part" v-if="item.part.length>0">
+					<div class="part" v-if="item.part && item.part.length>0">
 						<div class="give">赠送：</div>
 						<div class="partlist">
 							<div v-for="i in item.part">{{i.partName}}</div>
@@ -124,13 +124,13 @@
 					</div>
 					
   				</td>
-  				<td class="money">{{item.price | money}}</td>
+  				<td class="money">{{item.price || 0 | money}}</td>
   				<td class="quentity">
   					<a href="javascript:void(0);" @click="changeQuentity(item,-1)">-</a>
   					<input type="text" v-model="item.quentity">
   					<a href="javascript:void(0);" @click="changeQuentity(item,1)">+</a>
   				</td>
-  				<td class="money">{{item.price * item.quentity  | formatmoney }}</td>
+  				<td class="money">{{item.price * item.quentity || 0  | formatmoney }}</td>
   				<td @click="deleteThis(item)">删除</td>
 
   			</tr>
@@ -139,7 +139,7 @@
   	<div class="result">
   		<input type="checkbox" v-model="all" @click="selectAll();">全选
   		<span class="settlement fr"><router-link to="/address">结算</router-link></span>
-  		<span class="total money fr">总金额 : {{moneyTotal | money}} </span>
+  		<span class="total money fr">总金额 : {{moneyTotal || 0 | money}} </span>
 
   	</div>
   </div>
@@ -152,11 +152,14 @@ export default {
     return {
       cartList:[],
       moneyTotal : 0,
-      all : false
+      all : false,
+      product_id : "",
+      product_size: "",
+      product_color : ""
     }
   },
   watch:{
-	cartList : {
+	  cartList : {
       handler: function (val, oldVal) { 
       	this.moneyTotal = 0;
       	let flag = true;
@@ -180,23 +183,52 @@ export default {
   filters:{
   	formatmoney:function(value){
   		if(typeof value == 'string'){
-			value = Number(value);
-		}
+  			value = Number(value);
+  		}
   		return "¥" + value.toFixed(2);
   	}
   },
   mounted : function(){
-  	this.getCartList()
+    console.log('-----')
+    this.$nextTick(function(){
+      this.product_id = this.$route.params.id;
+      this.select_size = this.$route.params.size;
+      this.select_color = this.$route.params.color;
+
+      this.getCartList()      
+      this.getProductInfo(this.product_id);
+    })
   },
   methods:{
+    getProductInfo : function(id){
+      let that = this;
+      this.$http.get('../static/data/product/'+id+'.json').then(res =>{
+        if(res.status == 200){
+          this.productInfo = res.data;
+          let prodInfo = this.productInfo;
+          delete prodInfo.content;
+          let existProduct = null;
+          if(this.cartList.length>0){
+            existProduct = this.cartList.filter(function(value){
+              return value.id == id
+            })
+          }
+          if(existProduct.length == 0){
+            prodInfo.quentity = 1;
+            this.cartList.push(prodInfo);
+          }else{
+            prodInfo.quentity = existProduct.quentity + 1;
+            this.cartList.push(prodInfo);
+          }
+          window.localStorage.setItem('cartList',JSON.stringify(this.cartList));
+        }
+      })
+    },
     getCartList:function(){
-    	var that = this;
-    	this.$http.get('../static/data/shopcart.json',{page:1}).then(res => {
-    		console.log(res);
-    		if(res.status == 200){
-    			that.cartList = res.data;
-    		}
-    	})
+    	let cartList = JSON.parse(window.localStorage.getItem('cartList'));
+      if(cartList && cartList.length>0){
+        this.cartList = cartList;
+      }
     },
     changeQuentity:function(product,way){
     	if(way > 0){

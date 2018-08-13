@@ -16,6 +16,12 @@
 			{"color" : "黑色"},
 			{"color" : "藏青色"}
 		],
+		"part":[
+			{
+				"partId":2,
+				"partName":"胸针"
+			}
+		],
 		"images" :[
 			"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg",
 			"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg",
