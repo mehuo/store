@@ -9,7 +9,7 @@
           <router-link to="/shopcart">购物车</router-link>
         </li>
         <li>
-          <router-link to="/AddProduct">添加商品</router-link>
+          <router-link to="/addProduct">添加商品</router-link>
         </li>
       </ul>
     </div>

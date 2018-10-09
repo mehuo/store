@@ -5,6 +5,7 @@ import ShopCart from '@/pages/shopcart'
 import Address from '@/pages/address'
 import Product from '@/pages/product/product'
 import AddProduct from '@/pages/product/addProduct'
+import AddStore from '@/pages/product/addStore'
 import ProductDetail from '@/pages/product/details'
 
 Vue.use(Router)
@@ -17,7 +18,12 @@ export default new Router({
       component: Product
     },
     {
-      path: '/addProduct',
+      path: '/addStore', //添加商铺
+      name: 'addStore',
+      component: AddStore 
+    },
+    {
+      path: '/addProduct', //添加商品页面
       name: 'AddProduct',
       component: AddProduct
     },
