@@ -1,6 +1,8 @@
 var adminApi = require('./admin');
 var userApi = require('./system/user');
 var productApi = require('./product/index');
+var storeApi = require('./store/index');
+var utilApi = require('./utils/index');
 var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -22,9 +24,11 @@ app.all('*', function(req, res, next) {
 app.use(express.static(path.join(__dirname, '../src')));
 
 // 后端api路由
+app.use('/util', utilApi);
 app.use('/admin', adminApi);
 app.use('/system/user', userApi);
 app.use('/product/index', productApi);
+app.use('/store', storeApi);
 
 // 监听端口
 app.listen(8888);

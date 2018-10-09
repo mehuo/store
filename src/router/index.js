@@ -3,10 +3,16 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import ShopCart from '@/pages/shopcart'
 import Address from '@/pages/address'
+
+//商品部分
 import Product from '@/pages/product/product'
 import AddProduct from '@/pages/product/addProduct'
-import AddStore from '@/pages/product/addStore'
 import ProductDetail from '@/pages/product/details'
+
+//商铺部分
+import Store from '@/pages/store/index'
+import StoreList from '@/pages/store/list'
+import AddStore from '@/pages/store/addStore'
 
 Vue.use(Router)
 
@@ -18,10 +24,23 @@ export default new Router({
       component: Product
     },
     {
-      path: '/addStore', //添加商铺
-      name: 'addStore',
-      component: AddStore 
+      path: '/store', //商铺模块
+      name: 'store',
+      component: Store,
+      children : [
+        {
+          path: '/list', //商铺列表
+          name: 'list',
+          component: StoreList 
+        },
+        {
+          path: '/add', //添加商铺
+          name: 'addStore',
+          component: AddStore 
+        }
+      ]
     },
+    
     {
       path: '/addProduct', //添加商品页面
       name: 'AddProduct',

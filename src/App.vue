@@ -11,6 +11,9 @@
         <li>
           <router-link to="/addProduct">添加商品</router-link>
         </li>
+        <li>
+          <router-link to="/store">商铺管理</router-link>
+        </li>
       </ul>
     </div>
     <div class="content">
