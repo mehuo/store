@@ -5,18 +5,14 @@
 <template>
 	<div class="store">
 		<div class="leftMenus">
-	      <ul>
-	        <li>
-	          <router-link to="/list">商铺列表</router-link>
-	        </li>
-	        <li>
-	          <router-link to="/add">添加商铺</router-link>
-	        </li>
-	      </ul>
-	    </div>
-	    <div class="contentbox">
-	      <router-view/>
-	    </div>
+			<el-menu :router="true"  class="el-menu-demo" @select="handleSelect">
+	          <el-menu-item index="/store/list">商铺列表</el-menu-item>
+	          <el-menu-item index="/store/addStore">添加商铺</el-menu-item>
+	        </el-menu>
+		</div>
+		<div class="contentbox">
+			<router-view/>
+		</div>
 	</div>
 </template>
 
@@ -45,7 +41,9 @@ export default{
 	created(){
 	},
 	methods : {
-		
+		handleSelect(key, keyPath) {
+	      console.log(key, keyPath);
+	    }
 	}
 }
 </script>

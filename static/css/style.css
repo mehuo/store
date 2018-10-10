@@ -24,6 +24,12 @@ body{
 #app {
   position:relative;
 }
+aside{
+  border-right: solid 1px #e6e6e6;
+}
+.el-menu{
+  border-right: none;
+}
 .menu{
     width: 100%;
     height: 60px;
@@ -31,19 +37,8 @@ body{
     padding: 0 24px;
     top: 0;
     line-height: 60px;
-    background: #f0f0f0;
     box-shadow: 0px 2px 9px #cdcdcd;
     z-index: 10
-
-}
-.menu ul li{
-	float: left;
-	list-style: none;
-	margin-right: 20px;
-}
-.menu ul li a{
-  text-decoration: none;
-  color: #888888;
 }
 .content{
   width:1200px;
@@ -56,15 +51,9 @@ body{
 }
 .leftMenus{
   width: 200px;
-  float: left;
-}
-.leftMenus ul li{
-  list-style: none;
-  margin-bottom: 16px;
-}
-.leftMenus ul li a{
-  text-decoration: none;
-  color: #888888;
+  position: fixed;
+  height: 100%;
+  z-index: 2;
 }
 .contentbox{
   width: 100%;
@@ -73,39 +62,26 @@ body{
   overflow-x: hidden;
   box-sizing: border-box;
 }
-/*搜索框 BEGIN*/
-.page-search{
+table{
   width: 100%;
+  text-align: left;
+  table-layout: fixed;
 }
-.page-search input{
-  height: 34px;
-  line-height: 34px;
-  position: relative;
-  z-index: 2;
-  float: left;
-  margin-bottom: 0;
-  -webkit-appearance: none;
-  border: solid 1px #cdcdcd;
-  padding: 0px 8px;
-  width: 100%;
-  border-radius: 0 4px 4px 0;
+table thead tr{
+  height: 60px;
+  color: #909399;
+  font-size: 14px;
+  font-weight: 600;
 }
-.page-search .search {
-    height: 34px;
-    padding: 0 16px;
-    font-size: 14px;
-    line-height: 28px;
-    vertical-align: middle;
-    z-index: 9;
-    color: #ffffff;
-    border-radius: 20px;
-    background: #ff5000;
-    border: solid 2px #ff5000;
-    border-radius: 0 5px 5px 0;
-    position: absolute;
-    transform: translateX(-100%);
+table tbody tr td{
+  height: 60px;
+  color: #606266;
 }
-/*搜索框 END*/
+table tbody .btn a{
+  color:#409EFF;
+  font-size: 12px;
+}
+
 
 
 /*筛选条件 BEGIN*/
@@ -129,7 +105,16 @@ body{
     color: #fff;
     background: #ff5001;
     border-radius:0;
-
 }
 
 /*筛选条件 END*/
+
+
+/*分页 BEGIN*/
+.pagination{
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+/*分页 END*/
+

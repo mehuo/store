@@ -19,7 +19,7 @@
 	}
 	.address{
 		select{
-			width: 150px;
+			width: 170px;
 		}
 	}
 }

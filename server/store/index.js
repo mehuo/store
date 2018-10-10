@@ -30,6 +30,33 @@ var fail = function(err,res){
     }
 }
 
+var pageNation = function(total,page,page_size,data){
+    //total 总页数
+    //page 当前页数
+    //page_size 每页显示条数
+    //data 数据
+    console.log(total,page,page_size,data);
+    var page_data = {};
+    page_data.total = total || 0;
+    page_data.page = page || 1;
+    page_data.page_size = page_size || parseInt($sql.limit);
+    page_data.last_page = Math.ceil(total/page_size);
+    if(data){
+        page_data.data = data;
+    }else{
+        page_data.data = [];
+    }
+    console.log(page_data)
+    return page_data;
+}
+
+var setPageNation = function(data ,key , value){
+    console.log(data,key,value)
+    data[key] = value;
+    data['last_page'] = Math.ceil(data['total']/data['page_size']);    
+    return data;
+}
+
 //添加店铺
 router.post('/add', function(req, res) {
     var params = req.body;
@@ -51,7 +78,32 @@ router.post('/add', function(req, res) {
         jsonWrite(res,{status:0,statusinfo:result.message,data:result});
         res.end();
     });
-    
 });
+
+//获取店铺列表
+router.post('/list',function(req,res){
+	var params = req.body;
+	console.log(params);
+	var page_size = parseInt($sql.limit);
+    if(params.page_size){
+        page_size = parseInt(params.page_size);
+    }
+    var start = (parseInt(params.page)-1) * parseInt(page_size);
+    var page_data = pageNation(0,parseInt(params.page),page_size,[]);
+    connection.query(sqls.total , ['%'+params.keyword+'%',],function (err, result) {
+        fail(err,res);
+        page_data = setPageNation(page_data ,'total',result[0].total);
+        connection.query(sqls.list , ['%'+params.keyword+'%',start,page_size],function (err, result) {
+            fail(err);
+            page_data = setPageNation(page_data ,'data' , result);
+            jsonWrite(res,{
+                status:0,
+                statusinfo:'',
+                data:page_data
+            });
+            res.end();
+        });
+    });  
+})
 
 module.exports = router;

@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'; 
-import filters from '@/filters/filters.js'
+import filters from '@/filters/filters.js';
+import ElementUI from 'element-ui';
 
 Vue.use(VueResource)
+Vue.use(ElementUI)
 
 Object.keys(filters).forEach(function(key){
     Vue.filter( key , filters[key]);

@@ -29,12 +29,12 @@ export default new Router({
       component: Store,
       children : [
         {
-          path: '/list', //商铺列表
+          path: 'list', //商铺列表
           name: 'list',
           component: StoreList 
         },
         {
-          path: '/add', //添加商铺
+          path: 'addStore', //添加商铺
           name: 'addStore',
           component: AddStore 
         }
