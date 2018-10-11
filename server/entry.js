@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, '../src')));
 app.use('/util', utilApi);
 app.use('/admin', adminApi);
 app.use('/system/user', userApi);
-app.use('/product/index', productApi);
+app.use('/product', productApi);
 app.use('/store', storeApi);
 
 // 监听端口

@@ -79,14 +79,15 @@
 
 <template>
 	<div class="product">
-		<div class="search-box clearfix">
+		<!-- <div class="search-box clearfix">
 			<div class="page-search">
 		        <div class="form-group">
 		            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">
 		            <button class="btn search" type="submit">搜索</button>
 		        </div>
 		    </div>
-		</div>
+		</div> -->
+		<input-search color="#ff5001" width="900px" @searchByKey="searchByKeyWord"></input-search>
 		<div class="productlist">
 			<div class="left">
 				<div class="filter-group-default" role="group">
@@ -143,8 +144,11 @@
 </template>
 
 <script>
-
+import inputSearch from '@/components/inputSearch';
 export default{
+	components : {
+		inputSearch
+	},
 	data(){
 		return {
 			currentType : 1,

@@ -10,15 +10,7 @@
 
 <template>
 	<div class="store">
-		<!-- <div class="search-box clearfix">
-			<div class="page-search">
-		        <div class="form-group">
-		            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">
-		            <button class="btn search" type="submit">搜索</button>
-		        </div>
-		    </div>
-		</div> -->
-		<input-search color="red" radius="4px" @searchByKey="searchByKeyWord"></input-search>
+		<input-search color="#409EFF" radius="4px" @searchByKey="searchByKeyWord"></input-search>
 		<el-table :data="storeData.data" style="width: 100%">
 	      <el-table-column prop="name" label="名称"></el-table-column>
 	      <el-table-column prop="address" label="地址"></el-table-column>
@@ -27,16 +19,17 @@
 	      <el-table-column
 		      fixed="right"
 		      label="操作"
-		      width="200">
+		      width="280">
 		      <template slot-scope="scope">
-		        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-		        <el-button type="text" size="small">删除</el-button>
-		        <el-button type="text" size="small">添加商品</el-button>
+		        <el-button @click="editThis(scope.row)" type="text" size="small">编辑</el-button>
+		        <el-button @click="deleteThis(scope.row)" type="text" size="small">删除</el-button>
+		        <el-button @click="addProduct(scope.row)" type="text" size="small">添加商品</el-button>
+		        <el-button @click="openProductList(scope.row)" type="text" size="small">商品列表</el-button>
 		      </template>
 		    </el-table-column>
 	    </el-table>
 	    <div class="pagination block">
-		  <el-pagination background layout="prev, pager, next,jumper" :total="storeData.total" :page-size="1" @current-change="changePage">
+		  <el-pagination background layout="prev, pager, next,jumper" :total="storeData.total" :page-size="10" @current-change="changePage">
 		  </el-pagination>
 		</div>
 	</div>
@@ -46,7 +39,6 @@
 import axios from 'axios';
 import qs from 'qs';
 import inputSearch from '@/components/inputSearch';
-
 import config from '@/config';
 
 export default{
@@ -56,7 +48,7 @@ export default{
 	data(){
 		return {
 			storeData : {},
-			page_size : 1,
+			// page_size : 1,
 			page:1,
         	keyword:''
 		}
@@ -92,7 +84,31 @@ export default{
 		searchByKeyWord(keyword){
 			this.keyword = keyword;
 			this.getList();
+		},
+		//编辑店铺
+		editThis(row){
+			this.$router.push({ path: '/store/addStore', query: { tag: row.id }})
+		},
+		//删除店铺
+		deleteThis(row){
+			axios.post(config.baseUrl + '/store/delete',qs.stringify({id:row.id})).then((res)=>{
+				console.log(res);
+				this.page = 1;
+				this.getList();
+			}).catch((res)=>{
+				console.log(res);
+			})
+		},
+		//在该店铺下增加商品
+		addProduct(row){
+			this.$router.push({ path: '/store/addProduct', query: { tag: row.id }})
+		},
+		//查看该店铺下的商品
+		openProductList(row){
+			this.$router.push({ path: '/store/productList', query: { tag: row.id }})
 		}
+
+
 		
 	}
 }

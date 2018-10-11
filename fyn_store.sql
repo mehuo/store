@@ -11,7 +11,7 @@
  Target Server Version : 100129
  File Encoding         : 65001
 
- Date: 10/10/2018 18:20:12
+ Date: 11/10/2018 17:48:37
 */
 
 SET NAMES utf8mb4;
@@ -3609,7 +3609,15 @@ CREATE TABLE `t_product` (
   `update_time` datetime DEFAULT NULL,
   `is_delete` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_product
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_product` VALUES (2, 'Mind Bridge百家好夏季女装 吊带连衣裙 碎花裙女吊带裙 MROP323A', 2, 10, '[{\"text\":\"S\"},{\"text\":\"M\"},{\"text\":\"L\"},{\"text\":\"XL\"}]', '[{\"text\":\"白色\"},{\"text\":\"黑色\"},{\"text\":\"藏青色\"}]', '', '[\"https://img.alicdn.com/imgextra/i3/3357589328/TB2jTuhX6ZnyKJjSZFxXXabIpXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/3357589328/TB2B_bFjyCYBuNkSnaVXXcMsVXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/3357589328/TB2lhY0jwKTBuNkSne1XXaJoXXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/3357589328/TB2zlEBfQZmBKNjSZPiXXXFNVXa_!!3357589328.jpg_430x430q90.jpg\"]', '', '[\"裙子\",\"仙女\"]', '2018-10-11 14:59:59', '2018-10-11 14:59:59', '0');
+INSERT INTO `t_product` VALUES (3, 'Mind Bridge百家好夏季女装 吊带连衣裙 碎花裙女吊带裙 MROP323A', 1, 0, '[{\"text\":\"S\"},{\"text\":\"M\"},{\"text\":\"L\"},{\"text\":\"XL\"}]', '[{\"text\":\"白色\"},{\"text\":\"黑色\"},{\"text\":\"藏青色\"}]', '', '[\"https://img.alicdn.com/imgextra/i3/3357589328/TB2jTuhX6ZnyKJjSZFxXXabIpXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/3357589328/TB2B_bFjyCYBuNkSnaVXXcMsVXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/3357589328/TB2lhY0jwKTBuNkSne1XXaJoXXa_!!3357589328.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/3357589328/TB2zlEBfQZmBKNjSZPiXXXFNVXa_!!3357589328.jpg_430x430q90.jpg\"]', '<p>碎花裙子</p>', '[\"裙子\",\"仙女\"]', '2018-10-11 15:09:11', '2018-10-11 15:09:11', '0');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_store
@@ -3623,20 +3631,24 @@ CREATE TABLE `t_store` (
   `update_time` datetime DEFAULT NULL,
   `is_delete` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_store
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_store` VALUES (1, '付亚男的小店', '北京市 北京市 东城区', '2018-10-09 17:06:15', '2018-10-09 17:06:15', '0');
-INSERT INTO `t_store` VALUES (2, '刘阳的店铺', '河北省 石家庄市 长安区', '2018-10-10 15:14:30', '2018-10-10 15:14:30', '0');
+INSERT INTO `t_store` VALUES (2, '刘小阳的小店', '内蒙古 赤峰市 元宝山区', '2018-10-10 15:14:30', '2018-10-10 15:14:30', '0');
 INSERT INTO `t_store` VALUES (3, '内蒙大铺', '内蒙古 赤峰市 市辖区', '2018-10-10 15:20:43', '2018-10-10 15:20:43', '0');
 INSERT INTO `t_store` VALUES (4, '内蒙大铺', '内蒙古 赤峰市 喀喇沁旗', '2018-10-10 15:21:31', '2018-10-10 15:21:31', '0');
 INSERT INTO `t_store` VALUES (5, '测试数据1', '内蒙古 赤峰市 喀喇沁旗', '2018-10-10 15:21:31', '2018-10-10 15:21:31', NULL);
 INSERT INTO `t_store` VALUES (6, '测试数据2', '北京市 北京市 东城区', '2018-10-10 15:21:31', '2018-10-10 15:21:31', NULL);
 INSERT INTO `t_store` VALUES (7, '测试数据3', '北京市 北京市 东城区', '2018-10-10 15:21:31', '2018-10-10 15:21:31', NULL);
 INSERT INTO `t_store` VALUES (8, '测试数据4', '北京市 北京市 东城区', '2018-10-10 15:21:31', '2018-10-10 15:21:31', NULL);
+INSERT INTO `t_store` VALUES (12, 'aaa', '北京市 北京市 西城区', '2018-10-11 14:50:33', '2018-10-11 14:50:33', '0');
+INSERT INTO `t_store` VALUES (13, 'bbb', '北京市 北京市 宣武区', '2018-10-11 14:50:43', '2018-10-11 14:50:43', '0');
+INSERT INTO `t_store` VALUES (14, 'ccc', '北京市 北京市 丰台区', '2018-10-11 14:50:52', '2018-10-11 14:50:52', '0');
+INSERT INTO `t_store` VALUES (15, 'ddd', '北京市 北京市 东城区', '2018-10-11 14:50:58', '2018-10-11 14:50:58', '0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

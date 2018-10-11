@@ -159,6 +159,7 @@ import '../../../static/js/ueditor/lang/zh-cn/zh-cn.js'
 import '../../../static/js/ueditor/ueditor.parse.min.js'
 import axios from 'axios';
 import qs from 'qs';
+import config from '@/config';
 
 export default{
 	data(){
@@ -168,7 +169,7 @@ export default{
 				key_words:[
 					"裙子","仙女"
 				],
-				price:10,
+				price:'',
 				size_detail:[
 					{"text" : "S"},
 					{"text" : "M"},
@@ -192,19 +193,17 @@ export default{
 			images : '',
 			size_detail: '',
 			type_detail :'',
-			category : [
-				{name:'字符串',type:1},
-				{name:'数字',type:2},
-				{name:'长文本',type:3},
-				{name:'富文本',type:4}
-			],
-			array : [],
-			content : '',
 			instance : null
 		}
 	},
-	mounted() {
+	created(){
 		this.initEditor();
+	},
+	mounted() {
+		let query = this.$route.query;
+		if(query.tag){
+			this.prodInfo.shop_id = query.tag;
+		}
 	},
 	methods : {
 		initEditor () {
@@ -220,7 +219,7 @@ export default{
         getContet : function(){
         	let content = this.instance.getContent();
         	content = content.replace(/\"/g,'\'')
-        	this.content = content;
+        	this.prodInfo.content = content;
         },
         addItem : function(type){
         	if(type == 'key_words'){
@@ -255,13 +254,15 @@ export default{
         	}
         },
         saveProduct : function(){
+        	this.getContet();
         	console.log(this.prodInfo);
         	let params = Object.assign({}, this.prodInfo);
         	params.key_words = JSON.stringify(params.key_words);
         	params.size_detail = JSON.stringify(params.size_detail);
         	params.type_detail = JSON.stringify(params.type_detail);
         	params.images = JSON.stringify(params.images);
-        	axios.post('http://localhost:8888/product/index/add',qs.stringify(params)).then(function (response) {
+
+        	axios.post(config.baseUrl + '/product/add',qs.stringify(params)).then(function (response) {
 				console.log(response);
 			}).catch(function (error) {
 				console.log(error);

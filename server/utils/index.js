@@ -36,7 +36,6 @@ var pageNation = function(total,page,page_size,data){
     //page 当前页数
     //page_size 每页显示条数
     //data 数据
-    console.log(total,page,page_size,data);
     var page_data = {};
     page_data.total = total || 0;
     page_data.page = page || 1;
@@ -52,7 +51,6 @@ var pageNation = function(total,page,page_size,data){
 }
 
 var setPageNation = function(data ,key , value){
-    console.log(key,value)
     data[key] = value;
     data['last_page'] = Math.ceil(data['total']/data['page_size']);    
     return data;
@@ -71,7 +69,6 @@ router.post('/getArea', function(req, res) {
         }
         connection.query(sql , sqlArray, function (err, result) {
             fail(err,res);
-            console.log(result);
             jsonWrite(res,{status:0,statusinfo:result.message,data:result});
             res.end();
         });  

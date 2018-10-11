@@ -80,10 +80,29 @@ router.post('/add', function(req, res) {
     });
 });
 
+//编辑商铺
+router.post('/edit',function(req,res){
+	var params = req.body;
+	let store_id =  params.id;
+	connection.query(sqls.edit,[params.name,params.address,store_id],function(err,result){
+		fail(err,res);
+		jsonWrite(res,{status:0,statusinfo:'',data:result});
+	})
+})
+
+//删除商铺
+router.post('/delete',function(req,res){
+	var params = req.body;
+	let store_id = params.id;
+	connection.query(sqls.delete,[store_id],function(err,result){
+		fail(err,res);
+		jsonWrite(res,{status:0,statusinfo:'',data:result})
+	})
+})
+
 //获取店铺列表
 router.post('/list',function(req,res){
 	var params = req.body;
-	console.log(params);
 	var page_size = parseInt($sql.limit);
     if(params.page_size){
         page_size = parseInt(params.page_size);
@@ -104,6 +123,22 @@ router.post('/list',function(req,res){
             res.end();
         });
     });  
+})
+
+//根据id获取商铺
+router.post('/getThisStore',function(req,res){
+	let params = req.body;
+	let store_id =  params.id;
+	console.log('store_id------'+store_id)
+	connection.query(sqls.getThisStore,[store_id],function(err,result){
+		console.log(result);
+		fail(err,res);
+		jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result[0]
+        });
+	})
 })
 
 module.exports = router;

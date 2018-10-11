@@ -82,10 +82,36 @@ export default{
 	},
 	mounted() {
 		this.initProvince();
+		let query = this.$route.query;
+		if(query.tag){
+			this.getStoreInfo(query.tag);
+		}
 	},
 	created(){
+		
 	},
 	methods : {
+		getStoreInfo:function(id){
+			//获取当前商铺的信息
+			axios.post(config.baseUrl + '/store/getThisStore',qs.stringify({id:id})).then((res)=>{
+				if(res.data.status == 0){
+					let result = res.data.data;
+					this.storeInfo = result;
+					let address_arr = result.address.split(' ');
+					let province = this.province.filter(function(o){
+						return o.name == address_arr[0]
+					})
+					//重置地址
+					console.log(province)
+					if(province.length>0){
+						this.current_province = province[0];
+						this.getCity('change',address_arr);
+					}
+				}
+			}).catch((res)=>{
+				console.log(res);
+			})
+		},
 		initProvince:function(){
 			//获取省市县内容
 			axios.post(config.baseUrl + '/util/getArea',qs.stringify({type:'province'})).then((res)=>{
@@ -96,23 +122,39 @@ export default{
 				console.log(res);
 			})
 		},
-		getCity : function(type){
-			console.log(type)
+		getCity : function(type,address){
 			//获取省市县内容
 			axios.post(config.baseUrl + '/util/getArea',qs.stringify({type:'city',code:this.current_province.code})).then((res)=>{
 				this.city = res.data.data;
-				console.log(this.city)
 				this.current_city = this.city[0];
-				this.getArea('init');
+				if(address){
+					let citys = this.city.filter(function(o){
+						return o.name == address[1]
+					})
+					if(citys.length>0){
+						this.current_city = citys[0];
+						this.getArea('change',address);
+					}
+				}else{
+					this.getArea('init');
+				}
 			}).catch((res)=>{
 				console.log(res);
 			})
 		},
-		getArea : function(type){
+		getArea : function(type,address){
 			//获取省市县内容
 			axios.post(config.baseUrl + '/util/getArea',qs.stringify({type:'area',code:this.current_city.code})).then((res)=>{
 				this.area = res.data.data;
 				this.current_area = this.area[0];
+				if(address){
+					let areas = this.area.filter(function(o){
+						return o.name == address[2]
+					})
+					if(areas.length>0){
+						this.current_area = areas[0];
+					}
+				}
 			}).catch((res)=>{
 				console.log(res);
 			})
@@ -125,13 +167,29 @@ export default{
 			}
 		},
         saveToDB : function(){
+        	let that = this;
         	this.storeInfo.address = this.current_province.name + ' ' + this.current_city.name+ ' ' + this.current_area.name;
-        	console.log(this.storeInfo);
-        	axios.post(config.baseUrl + '/store/add',qs.stringify(this.storeInfo)).then(function (response) {
-				console.log(response);
-			}).catch(function (error) {
-				console.log(error);
-			});
+			if(this.storeInfo.id){
+				//编辑
+				axios.post(config.baseUrl + '/store/edit',qs.stringify(this.storeInfo)).then(function (response) {
+					console.log(response);
+					if(response.data.status == 0){
+						that.$router.push({path:'/store/list'});
+					}
+				}).catch(function (error) {
+					console.log(error);
+				});
+			}else{
+				//保存
+				axios.post(config.baseUrl + '/store/add',qs.stringify(this.storeInfo)).then(function (response) {
+					console.log(response);
+					if(response.data.status == 0){
+						that.$router.push({path:'/store/list'});
+					}
+				}).catch(function (error) {
+					console.log(error);
+				});
+			}
         	
         }
 	}
