@@ -90,13 +90,16 @@ export default{
 		},
 		//删除店铺
 		deleteThis(row){
-			axios.post(config.baseUrl + '/store/delete',qs.stringify({id:row.id})).then((res)=>{
-				console.log(res);
-				this.page = 1;
-				this.getList();
-			}).catch((res)=>{
-				console.log(res);
-			})
+			if(confirm('确认要删除这个商铺吗？')){
+				axios.post(config.baseUrl + '/store/delete',qs.stringify({id:row.id})).then((res)=>{
+					console.log(res);
+					this.page = 1;
+					this.getList();
+				}).catch((res)=>{
+					console.log(res);
+				})
+			}
+			
 		},
 		//查看该店铺下的商品
 		openProductList(row){

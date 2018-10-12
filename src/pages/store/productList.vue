@@ -128,13 +128,15 @@ export default{
 		},
 		//删除商品
 		deleteThis(row){
-			axios.post(config.baseUrl + '/product/delete',qs.stringify({id:row.id})).then((res)=>{
-				console.log(res);
-				this.page = 1;
-				this.getList();
-			}).catch((res)=>{
-				console.log(res);
-			})
+			if(confirm('确认要删除这个商品吗？')){
+				axios.post(config.baseUrl + '/product/delete',qs.stringify({id:row.id})).then((res)=>{
+					console.log(res);
+					this.page = 1;
+					this.getList();
+				}).catch((res)=>{
+					console.log(res);
+				})
+			}
 		},
 		//在该店铺下增加商品
 		addProduct(shop_id){
