@@ -17,6 +17,11 @@
 		width:500px;
 		padding: 0 8px;
 	}
+	.plus{
+		select{
+			height: auto;
+		}
+	}
 	.extra{
 		margin-left: 125px;
 		margin-top: 12px;
@@ -39,15 +44,16 @@
 			margin-right: 12px;
 			height: 32px;
 		    display: inline-block;
-		    background: #e5e5e5;
+		    background: #409eff;
 		    line-height: 32px;
 		    padding: 0 12px;
 		    border-radius: 4px;
-		    border: solid 1px #cdcdcd;
+		    border: solid 1px #409eff;
+		    color: #fff;
 			span{
 				&:last-child{
-					margin-left:4px;
-					color: #f95759;
+					margin-left:10px;
+					color: #fff;
 				}
 			}
 		}
@@ -59,14 +65,15 @@
 			float: left;
 			margin-right: 12px;
 			position: relative;
+			border:solid 1px #e5e5e5;
 			img{
 				width: 100%;
 			}
 			.del{
 				position: absolute;
 				right: 0;
-				top: 0;
-				color: #f95759;
+				top: -7px;
+				color: #409eff;
 			}
 		}
 	}
@@ -93,6 +100,9 @@ button{
 
 <template>
 	<div class="addProduct">
+		<div class="clearfix">
+			<a class="btn-min sbtn-primary" @click="reBackList">返回列表</a>
+		</div>
 		<div class="form-group">
 			<label for="">名称:</label>
 			<input type="text" v-model="prodInfo.name">
@@ -102,21 +112,21 @@ button{
 			<input placeholder="可以设置多个关键字，回车添加" type="text" v-model="key_words" @keyup.enter="addItem('key_words')">
 			<div class="extra key_words">
 				<span class="item" v-for="(item,index) in prodInfo.key_words">
-					<span>{{item}}</span><span @click="delItem('key_words',index)">删除</span>
+					<span>{{item}}</span><span @click="delItem('key_words',index)">x</span>
 				</span>
 			</div>
 		</div>
 		<div class="form-group price">
 			<label for="">价格:</label>
 			<!-- <span @click="">-</span><input type="text"><span>+</span> -->
-			<input type="text">
+			<input type="text" v-model="prodInfo.price">
 		</div>
 		<div class="form-group">
 			<label for="">商品尺寸:</label>
 			<input placeholder="回车添加" type="text" v-model="size_detail" @keyup.enter="addItem('size_detail')">
 			<div class="extra key_words">
 				<span class="item" v-for="(item,index) in prodInfo.size_detail">
-					<span>{{item.text}}</span><span @click="delItem('size_detail',index)">删除</span>
+					<span>{{item.text}}</span><span @click="delItem('size_detail',index)">x</span>
 				</span>
 			</div>
 		</div>
@@ -125,28 +135,32 @@ button{
 			<input placeholder="回车添加" type="text" v-model="type_detail" @keyup.enter="addItem('type_detail')">
 			<div class="extra key_words">
 				<span class="item" v-for="(item,index) in prodInfo.type_detail">
-					<span>{{item.text}}</span><span @click="delItem('type_detail',index)">删除</span>
+					<span>{{item.text}}</span><span @click="delItem('type_detail',index)">x</span>
 				</span>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="">图片:</label>
-			<input type="text" placeholder="请输入图片地址" @keyup.enter="addItem('images')">
+			<input type="text" placeholder="请输入图片地址" v-model="images" @keyup.enter="addItem('images')">
 			<div class="extra images clearfix">
 				<div class="item" v-for="(item,index) in prodInfo.images">
 					<img :src="item" alt=""/>
-					<span class="del" @click="delItem('images',index)">删除</span>
+					<span class="del" @click="delItem('images',index)">x</span>
 				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label for="">附加商品:</label>
 		</div>
 		<div class="form-group">
 			<label for="">商品详情:</label>
 			<div class="fwb">
 				<script id="container" type="text/plain" style="width:500px;height:300px;"></script>
 			</div>
+		</div>
+		<div class="form-group plus">
+			<label for="">附加商品:</label>
+			<select  multiple="multiple" v-model="prodInfo.part_ids">
+				<option v-for="item in productList" :value="item.id">{{item.name}}</option>
+			</select>
+			<!-- <select-search color="#409EFF" radius="4px" width="500px" :list="productList"></select-search> -->
 		</div>
 		<button @click="saveProduct()">保存</button>
 	</div>
@@ -160,51 +174,62 @@ import '../../../static/js/ueditor/ueditor.parse.min.js'
 import axios from 'axios';
 import qs from 'qs';
 import config from '@/config';
+import selectSearch from '@/components/selectSearch';
+
 
 export default{
+	components:{
+		selectSearch
+	},
 	data(){
 		return {
 			prodInfo : {
-				name:'Mind Bridge百家好夏季女装 吊带连衣裙 碎花裙女吊带裙 MROP323A',
+				name:'',
 				key_words:[
-					"裙子","仙女"
+					// "牛仔短裙","高腰"
 				],
 				price:'',
 				size_detail:[
-					{"text" : "S"},
-					{"text" : "M"},
-					{"text" : "L"},
-					{"text" : "XL"}
+					// {"text" : "S"},
+					// {"text" : "M"},
+					// {"text" : "L"},
 				],
 				type_detail : [
-					{"text" : "白色"},
-					{"text" : "黑色"},
-					{"text" : "藏青色"}
+					// {"text" : "粉色"},
+					// {"text" : "灰色"}
 				],
 				images : [
-					"https://img.alicdn.com/imgextra/i3/3357589328/TB2jTuhX6ZnyKJjSZFxXXabIpXa_!!3357589328.jpg_430x430q90.jpg",
-					"https://img.alicdn.com/imgextra/i1/3357589328/TB2B_bFjyCYBuNkSnaVXXcMsVXa_!!3357589328.jpg_430x430q90.jpg",
-					"https://img.alicdn.com/imgextra/i2/3357589328/TB2lhY0jwKTBuNkSne1XXaJoXXa_!!3357589328.jpg_430x430q90.jpg",
-					"https://img.alicdn.com/imgextra/i4/3357589328/TB2zlEBfQZmBKNjSZPiXXXFNVXa_!!3357589328.jpg_430x430q90.jpg"
+					// "https://g-search3.alicdn.com/img/bao/uploaded/i4/i2/2219860958/TB1iGMUcyMnBKNjSZFCXXX0KFXa_!!0-item_pic.jpg_460x460Q90.jpg_.webp"
 				],
+				part_ids : [], //附加id
 				content : ""
 			},
 			key_words : '',
 			images : '',
 			size_detail: '',
 			type_detail :'',
-			instance : null
+			instance : null,
+			productList : null,
+			keyword : ''
 		}
 	},
 	created(){
-		this.initEditor();
+		// window.location.reload();
 	},
 	mounted() {
+		this.initEditor();
 		let query = this.$route.query;
 		if(query.tag){
 			this.prodInfo.shop_id = query.tag;
 		}
+		if(query.row_id){
+			this.getThis(query.row_id);
+		}
+		this.getProductList(); //获取该店铺下所有商品
 	},
+	destroyed() {
+		UE.delEditor('container');
+    },
 	methods : {
 		initEditor () {
             //dom元素已经挂载上去了
@@ -253,7 +278,50 @@ export default{
         		this.prodInfo.type_detail.splice(index,1);
         	}
         },
+        getThis(id){
+        	let that = this;
+        	axios.post(config.baseUrl + '/product/getThis',qs.stringify({id:id})).then((res)=>{
+				if(res.data.status == 0){
+					let result = res.data.data;
+					that.prodInfo = result;
+					that.prodInfo.key_words = JSON.parse(result.key_words);
+					that.prodInfo.images = JSON.parse(result.images);
+					that.prodInfo.type_detail = JSON.parse(result.type_detail);
+					that.prodInfo.size_detail = JSON.parse(result.size_detail);
+					if(result.part_ids){
+						that.prodInfo.part_ids = JSON.parse(result.part_ids);
+					}else{
+						that.prodInfo.part_ids = [];
+					}
+					that.instance.ready(function(){
+        				that.instance.setContent(result.detail,false);
+					})
+
+				}else{
+					alert(res.data.statusinfo);
+				}
+			}).catch((res)=>{
+				console.log(res);
+			})
+        },
+        getProductList(){
+			let that = this;
+			let params = {
+				keyword : this.keyword,
+				shop_id : this.prodInfo.shop_id
+			}
+			axios.post(config.baseUrl + '/product/all',qs.stringify(params)).then((res)=>{
+				if(res.data.status == 0){
+					that.productList = res.data.data;
+				}else{
+					alert(res.data.statusinfo);
+				}
+			}).catch((res)=>{
+				console.log(res);
+			})
+		},
         saveProduct : function(){
+        	let that = this;
         	this.getContet();
         	console.log(this.prodInfo);
         	let params = Object.assign({}, this.prodInfo);
@@ -261,13 +329,27 @@ export default{
         	params.size_detail = JSON.stringify(params.size_detail);
         	params.type_detail = JSON.stringify(params.type_detail);
         	params.images = JSON.stringify(params.images);
-
-        	axios.post(config.baseUrl + '/product/add',qs.stringify(params)).then(function (response) {
-				console.log(response);
-			}).catch(function (error) {
-				console.log(error);
-			});
+        	params.part_ids = JSON.stringify(params.part_ids);
+        	if(this.prodInfo.id){
+        		axios.post(config.baseUrl + '/product/edit',qs.stringify(params)).then(function (response) {
+					console.log(response);
+					window.location.reload();
+				}).catch(function (error) {
+					console.log(error);
+				});
+        	}else{
+        		axios.post(config.baseUrl + '/product/add',qs.stringify(params)).then(function (response) {
+					console.log(response);
+					window.location.reload();
+				}).catch(function (error) {
+					console.log(error);
+				});
+        	}
         	
+        },
+        reBackList(){
+			this.$router.push({ path: '/store/productList', query: { tag: this.prodInfo.shop_id }});
+
         }
 	}
 }

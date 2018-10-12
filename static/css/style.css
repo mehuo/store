@@ -82,6 +82,41 @@ table tbody .btn a{
   font-size: 12px;
 }
 
+.btn-min{
+  font-size: 14px;
+  padding: 8px 16px;
+  outline: none;
+  border-radius: 4px;
+  display: inline-block;
+}
+.mbtn-primary{
+  color: #fff;
+  border: solid 1px #409eff;
+  background:  #409eff;
+}
+.mbtn-primary:hover{
+  background: rgba(64,158,255,0.9);
+}
+.sbtn-primary{
+  color:  #409eff;
+  border: solid 1px #409eff;
+  background: rgba(64,158,255,0.1);
+}
+.sbtn-primary:hover{
+  background: #409eff;
+  color: #fff
+}
+.cbtn-primary{
+  color:  #409eff;
+  border: solid 1px #409eff;
+  background: rgba(64,158,255,0.1);
+  border-radius: 20px;
+}
+.cbtn-primary:hover{
+  background: #409eff;
+  color: #fff
+}
+
 
 
 /*筛选条件 BEGIN*/

@@ -19,11 +19,10 @@
 	      <el-table-column
 		      fixed="right"
 		      label="操作"
-		      width="280">
+		      width="180">
 		      <template slot-scope="scope">
 		        <el-button @click="editThis(scope.row)" type="text" size="small">编辑</el-button>
 		        <el-button @click="deleteThis(scope.row)" type="text" size="small">删除</el-button>
-		        <el-button @click="addProduct(scope.row)" type="text" size="small">添加商品</el-button>
 		        <el-button @click="openProductList(scope.row)" type="text" size="small">商品列表</el-button>
 		      </template>
 		    </el-table-column>
@@ -98,10 +97,6 @@ export default{
 			}).catch((res)=>{
 				console.log(res);
 			})
-		},
-		//在该店铺下增加商品
-		addProduct(row){
-			this.$router.push({ path: '/store/addProduct', query: { tag: row.id }})
 		},
 		//查看该店铺下的商品
 		openProductList(row){

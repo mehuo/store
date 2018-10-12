@@ -21,6 +21,9 @@ var sqlMap = {
         delete : 'DELETE FROM t_product WHERE id = ?',
         total : 'SELECT COUNT(*) total FROM t_product WHERE shop_id = ? AND name LIKE ? ',
         list : 'SELECT * FROM t_product WHERE shop_id = ? AND name LIKE ? limit ?,?',
+        all : 'SELECT * FROM t_product WHERE shop_id = ? AND name LIKE ?',
+        getThis : 'SELECT * FROM t_product WHERE id = ?;',
+        edit : 'UPDATE t_product SET name = ?,price = ?,size_detail=?,type_detail=?,part_ids=?,images=?,detail=?,key_words=?,update_time=? WHERE id = ?;',
     },
     util:{
         province : 'SELECT * FROM province;',

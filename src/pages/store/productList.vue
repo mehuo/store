@@ -18,7 +18,8 @@
 
 <template>
 	<div class="store">
-		<input-search color="#409EFF" radius="4px" @searchByKey="searchByKeyWord"></input-search>
+		<input-search class="fl" color="#409EFF" radius="4px" width="500px;" @searchByKey="searchByKeyWord"></input-search>
+		<a class="btn-min sbtn-primary fr" @click="addProduct()" >添加产品</a>
 		<el-table :data="data.data" style="width: 100%">
 	      <el-table-column prop="name" label="名称"></el-table-column>
 	      <el-table-column prop="key_words" label="关键词">
@@ -100,22 +101,17 @@ export default{
 				console.log(res)
 				if(res.data.status == 0){
 					that.data = res.data.data;
-					console.log(that.data)
-
-
-
 					that.data.data.forEach(function(val,key){
 						val.key_words = JSON.parse(val.key_words);
 						val.size_detail = JSON.parse(val.size_detail);
 						val.type_detail = JSON.parse(val.type_detail);
 						val.images = JSON.parse(val.images);
 					})
-					console.log(that.data.data)
 				}else{
 					alert(res.data.statusinfo);
 				}
 			}).catch((res)=>{
-
+				console.log(res);
 			})
 		},
 		changePage(val){
@@ -126,9 +122,9 @@ export default{
 			this.keyword = keyword;
 			this.getList();
 		},
-		//编辑善品
+		//编辑商品
 		editThis(row){
-			this.$router.push({ path: '/store/addProduct', query: { tag: row.id }})
+			this.$router.push({ path: '/store/addProduct', query: { tag: this.shop_id, row_id:row.id }})
 		},
 		//删除商品
 		deleteThis(row){
@@ -139,7 +135,11 @@ export default{
 			}).catch((res)=>{
 				console.log(res);
 			})
-		}
+		},
+		//在该店铺下增加商品
+		addProduct(shop_id){
+			this.$router.push({ path: '/store/addProduct', query: { tag: this.shop_id }})
+		},
 	}
 }
 </script>

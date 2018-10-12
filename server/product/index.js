@@ -71,7 +71,7 @@ router.post('/add', function(req, res) {
             params.price, //价格
             params.size_detail, //商品尺码
             params.type_detail, //商品种类
-            '', //附加产品ids
+            params.part_ids, //附加产品ids
             params.images, //商品图片
             params.content, //商品详情
             params.key_words, //商品关键字
@@ -84,6 +84,29 @@ router.post('/add', function(req, res) {
         res.end();
     });
 });
+
+//编辑商品
+router.post('/edit',function(req,res){
+    var params = req.body;
+    let id =  params.id;
+    connection.query(sqls.edit, [
+            params.name, //名称
+            params.price, //价格
+            params.size_detail, //商品尺码
+            params.type_detail, //商品种类
+            params.part_ids, //附加产品ids
+            params.images, //商品图片
+            params.content, //商品详情
+            params.key_words, //商品关键字
+            params.update_time, //修改时间
+            id
+        ],function(err,result){
+        fail(err,res);
+        jsonWrite(res,{status:0,statusinfo:'',data:result});
+    })
+})
+
+
 
 //删除产品
 router.post('/delete',function(req,res){
@@ -119,6 +142,35 @@ router.post('/list',function(req,res){
             res.end();
         });
     });  
+})
+
+//获取该商铺下所有商品
+router.post('/all',function(req,res){
+    var params = req.body;
+    var shop_id = params.shop_id;
+    connection.query(sqls.all , [shop_id,'%'+params.keyword+'%'],function (err, result) {
+        fail(err);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'',
+            data:result
+        });
+        res.end();
+    }); 
+})
+
+//根据id获取商品信息
+router.post('/getThis',function(req,res){
+    let params = req.body;
+    let id =  params.id;
+    connection.query(sqls.getThis,[id],function(err,result){
+        fail(err,res);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result[0]
+        });
+    })
 })
 
 module.exports = router;
