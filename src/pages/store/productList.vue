@@ -98,7 +98,7 @@ export default{
 				shop_id : this.shop_id
 			}
 			axios.post(config.baseUrl + '/product/list',qs.stringify(params)).then((res)=>{
-				console.log(res)
+				console.log(res.data.data)
 				if(res.data.status == 0){
 					that.data = res.data.data;
 					that.data.data.forEach(function(val,key){

@@ -3,6 +3,7 @@ var $sql = require('../sqlfun');
 var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var async = require('async');
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended:true}))
 
@@ -35,7 +36,7 @@ var pageNation = function(total,page,page_size,data){
     //page 当前页数
     //page_size 每页显示条数
     //data 数据
-    console.log(total,page,page_size,data);
+    // console.log(total,page,page_size,data);
     var page_data = {};
     page_data.total = total || 0;
     page_data.page = page || 1;
@@ -46,12 +47,12 @@ var pageNation = function(total,page,page_size,data){
     }else{
         page_data.data = [];
     }
-    console.log(page_data)
+    // console.log(page_data)
     return page_data;
 }
 
 var setPageNation = function(data ,key , value){
-    console.log(data,key,value)
+    // console.log(data,key,value)
     data[key] = value;
     data['last_page'] = Math.ceil(data['total']/data['page_size']);    
     return data;
@@ -133,7 +134,24 @@ router.post('/list',function(req,res){
         page_data = setPageNation(page_data ,'total',result[0].total);
         connection.query(sqls.list , [shop_id,'%'+params.keyword+'%',start,page_size],function (err, result) {
             fail(err);
-            page_data = setPageNation(page_data ,'data' , result);
+            let resultData = result;
+            for (var i = 0; i < resultData.length; i++) {
+                resultData[i].partProduct = [];
+                if(resultData[i].part_ids){
+                    let part_ids = JSON.parse(resultData[i].part_ids);
+                    for (var j = 0; j < part_ids.length; j++) {
+                        console.log('id------'+part_ids[i])
+                        connection.query(sqls.getThis,[part_ids[j]],function(err1,result1){
+                            console.log(result1);
+                            if(resultData[i] && resultData[i].partProduct){
+                                resultData[i].partProduct.push(result1[0]);
+                            }
+                        })
+                    }
+                }
+            }
+            fail(err);
+            page_data = setPageNation(page_data ,'data' , resultData);
             jsonWrite(res,{
                 status:0,
                 statusinfo:'',
