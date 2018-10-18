@@ -1,92 +1,99 @@
-<style>
-.product{
-
-}
-.product .productlist{
-	margin-top: 24px;
-}
-.product .left{
-	width: 75%;
-	float: left;
-	height: 200px;
-}
-.product .right{
-	width: 25%;
-	float: right;
-	height: 200px;
-}
-.product .list{
-	box-sizing: border-box;
-}
-.product .list .item{
-	width: calc(calc(100% - 30px) / 4);
-    display: inline-block;
-    box-sizing: border-box;o
-    margin-right: 10px;
-    border: solid 1px #cdcdcd;
-    vertical-align: top;
-    padding-bottom: 20px;
-    margin-top: 20px;
-    margin-right: 10px;
-}
-.product .list .item:nth-of-type(4n){
-	margin-right: 0;
-}
-.product .list .itad{
-	width: auto;
-	margin: 0 25px;
-	margin-bottom: 10px;
-}
-
-.product .list .item img{
-	width: 100%;
-}
-.product .list .item .info{
-	margin-top: 16px;
-	padding: 0 8px;
-}
-.product .list .item .price{
-	color: #f40;
-	font-size:16px;
-	font-weight: bold;
-}
-.product .list .item .payer{
-	font-size: 12px;
-	color: #888888;
-}
-.product .list .item .name{
-	height: 40px;
-    overflow: hidden;
-    font-size: 12px;
-    color: #000;
-    line-height: 16px;
-    margin-top: 8px;
-}
-
-.adbox .title{    
-	margin: 0 25px;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: solid 1px #cdcdcd;
-    height: 36px;
-    margin-bottom: 20px;
-}
+<style scoped lang="less">
 .search-box{
 	width: 900px;
 }
+.product{
+	.productlist{
+		margin-top: 24px;
+	}
+	.left{
+		width: 75%;
+		float: left;
+		height: 200px;
+	}
+	.right{
+		width: 25%;
+		float: right;
+		height: 200px;
+		.list{
+			.item{
+				width : 100%;
+			}
+		}
+	}
+	.adbox{  
+		padding: 0 25px;  
+		box-sizing: border-box;
+		.title{
+		    font-size: 16px;
+		    font-weight: bold;
+		    border-bottom: solid 1px #cdcdcd;
+		    height: 36px;
+		    margin-bottom: 20px;
+		}
+	}
+	.list{
+		box-sizing: border-box;
+		.item{
+			width: calc(calc(100% - 30px) / 4);
+		    display: inline-block;
+		    box-sizing: border-box;o
+		    margin-right: 10px;
+		    border: solid 1px #cdcdcd;
+		    vertical-align: top;
+		    padding-bottom: 20px;
+		    margin-top: 20px;
+		    margin-right: 10px;
+		    &:nth-of-type(4n){
+				margin-right: 0;
+			}
+			.itad{
+				width: auto;
+				margin: 0 25px;
+				margin-bottom: 10px;
+			}
+			img{
+				width: 100%;
+			}
+			.info{
+				margin-top: 16px;
+				padding: 0 8px;
+			}
+			.price{
+				color: #f40;
+				font-size:16px;
+				font-weight: bold;
+			}
+			.payer{
+				font-size: 12px;
+				color: #888888;
+			}
+			.name{
+				height: 40px;
+			    overflow: hidden;
+			    font-size: 12px;
+			    color: #000;
+			    line-height: 16px;
+			    margin-top: 8px;
+			}
+			.shop_address{
+				width: 40%;
+			    text-overflow: ellipsis;
+			    white-space: nowrap;
+			    overflow: hidden;
+			    display: inline-block;
+			}
+		}
+	}
+}
+
+
+
 
 </style>
 
 <template>
 	<div class="product">
-		<!-- <div class="search-box clearfix">
-			<div class="page-search">
-		        <div class="form-group">
-		            <input type="search" placeholder="" value="" class="form-control" placeholder="搜索关键字">
-		            <button class="btn search" type="submit">搜索</button>
-		        </div>
-		    </div>
-		</div> -->
 		<input-search color="#ff5001" width="900px" @searchByKey="searchByKeyWord"></input-search>
 		<div class="productlist">
 			<div class="left">
@@ -99,8 +106,8 @@
 			        </button>
 			    </div>
 				<div class="list">
-					<div class="item" v-for="(item,index) in productList">
-						<router-link :to="{name:'ProductDetail',params :{id:item.id,index:index}}">
+					<div class="item" v-for="(item,index) in productData.data">
+						<div @click="goDetail(item)">
 							<div>
 								<img :src="item.images[0]" alt="">
 								<div class="info">
@@ -110,13 +117,17 @@
 									</div>
 									<div class="name">{{item.name}}</div>
 									<div class="clearfix payer">
-										<span class="fl">{{item.shop}}</span>
-										<span class="fr">{{item.shop_address}}</span>
+										<span class="fl">{{item.shop_name}}</span>
+										<span class="fr shop_address">{{item.shop_address}}</span>
 									</div>
 								</div>
 							</div>
-						</router-link>
+						</div>
 					</div>
+				</div>
+				<div class="pagination block">
+				    <el-pagination background layout="prev, pager, next,jumper" :total="productData.total" :page-size="page_size" @current-change="changePage">
+				    </el-pagination>
 				</div>
 			</div>
 			<div class="right adbox">
@@ -131,20 +142,25 @@
 							</div>
 							<div class="name">{{item.name}}</div>
 							<div class="clearfix payer">
-								<span class="fl">{{item.shop}}</span>
-								<span class="fr">{{item.shop_address}}</span>
+								<span class="fl">{{item.shop_name}}</span>
+								<span class="fr shop_address">{{item.shop_address}}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
 import inputSearch from '@/components/inputSearch';
+import config from '@/config';
+
 export default{
 	components : {
 		inputSearch
@@ -152,7 +168,10 @@ export default{
 	data(){
 		return {
 			currentType : 1,
-			productList : []
+			productData : [],
+			page:1,
+			page_size : 8,
+        	keyword:'',
 		}
 	},
 	mounted(){
@@ -163,23 +182,50 @@ export default{
 	},
 	computed:{
 		addProductList : function(){
-			return this.productList.slice(0,2);
+			console.log(this.productData.data);
+			if(this.productData.data){
+				return this.productData.data.slice(0,2);
+			}
 		}
 	},
 	methods:{
 		getProductList :function(){
 			let that = this;
-			this.$http.get('../static/data/product.json',{page:1}).then(res =>{
-				console.log(res);
-				if(res.status == 200){
-					that.productList = res.data;
+			let params = {
+				page : this.page,
+				keyword : this.keyword,
+				page_size : this.page_size,
+			}
+			axios.post(config.baseUrl + '/product/list',qs.stringify(params)).then((res)=>{
+				if(res.data.status == 0){
+					that.productData = res.data.data;
+					that.productData.data.forEach(function(val,key){
+						val.key_words = JSON.parse(val.key_words);
+						val.size_detail = JSON.parse(val.size_detail);
+						val.type_detail = JSON.parse(val.type_detail);
+						val.images = JSON.parse(val.images);
+					})
+				}else{
+					alert(res.data.statusinfo);
 				}
+			}).catch((res)=>{
+				console.log(res);
 			})
+		},
+		goDetail:function(item){
+			this.$router.push({path:'ProductDetail', query:{id:item.id}});
 		},
 		changeType:function(type){
 			this.currentType = type;
+		},
+		searchByKeyWord : function(){
 
+		},
+		changePage:function(val){
+			this.page = val;
+			this.getProductList();
 		}
+
 	}
 }
 

@@ -310,7 +310,7 @@ export default{
 				keyword : this.keyword,
 				shop_id : this.prodInfo.shop_id
 			}
-			axios.post(config.baseUrl + '/product/all',qs.stringify(params)).then((res)=>{
+			axios.post(config.baseUrl + '/product/allBy',qs.stringify(params)).then((res)=>{
 				if(res.data.status == 0){
 					that.productList = res.data.data;
 				}else{

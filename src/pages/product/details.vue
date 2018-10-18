@@ -143,10 +143,10 @@ img{
 				</div>
 				<div class="choose">
 					<div class="size">
-						<div class="item" v-for="item in productInfo.size" :class="{'active':productInfo.select_size == item.size}" @click="selectSize(item)">{{item.size}}</div>
+						<div class="item" v-for="item in productInfo.size_detail" :class="{'active':productInfo.select_size == item.text}" @click="selectSize(item)">{{item.text}}</div>
 					</div>
 					<div class="size">
-						<div class="item" v-for="item in productInfo.color" :class="{'active':productInfo.select_color == item.color}"  @click="selectColor(item)">{{item.color}}</div>
+						<div class="item" v-for="item in productInfo.type_detail" :class="{'active':productInfo.select_type == item.text}"  @click="selectColor(item)">{{item.text}}</div>
 					</div>
 				</div>
 				<div class="send">
@@ -170,7 +170,7 @@ img{
 			</div>
 			<div class="cont">
 				<div class="detailInfo" v-show="detailTab==1">
-					<div v-html="productInfo.content"></div>
+					<div v-html="productInfo.detail"></div>
 				</div>
 				<div class="evaluate" v-show="detailTab==2">
 					ddede
@@ -179,18 +179,23 @@ img{
 		</div>
 	</div>
 </template>
-
 <script>
+
+import axios from 'axios';
+import qs from 'qs';
+import inputSearch from '@/components/inputSearch';
+import config from '@/config';
+
 export default{
 	data() {
 		return {
 			product_id : '',
 			detailTab : 1,
-			productInfo : {}
+			productInfo : {},
 		}
 	},
 	mounted(){
-		this.product_id = this.$route.params.id;
+		this.product_id = this.$route.query.id;
 		this.$nextTick(function(){
 			this.getProductInfo(this.product_id);
 		})
@@ -198,17 +203,24 @@ export default{
 	methods : {
 		getProductInfo : function(id){
 			let that = this;
-			this.$http.get('../static/data/product/'+id+'.json').then(res =>{
-				if(res.status == 200){
-					this.productInfo = res.data;
-					if(this.productInfo.size.length>0){
-						this.$set(this.productInfo,'select_size',this.productInfo.size[0].size);
-					}
-					if(this.productInfo.color.length>0){
-						this.$set(this.productInfo,'select_color',this.productInfo.color[0].color);
-					}
-					this.$set(this.productInfo,'big_image',this.productInfo.images[0])
+			let params = {
+				id : id
+			}
+			axios.post(config.baseUrl+'/product/getThis',qs.stringify(params)).then(res=>{
+				console.log(res)
+				this.productInfo = res.data.data;
+				this.productInfo.key_words = JSON.parse(this.productInfo.key_words);
+				this.productInfo.size_detail = JSON.parse(this.productInfo.size_detail);
+				this.productInfo.type_detail = JSON.parse(this.productInfo.type_detail);
+				this.productInfo.images = JSON.parse(this.productInfo.images);
+				this.$set(this.productInfo,'big_image',this.productInfo.images[0])
+				if(this.productInfo.size_detail.length>0){
+					this.$set(this.productInfo,'select_size',this.productInfo.size_detail[0].text);
 				}
+				if(this.productInfo.type_detail.length>0){
+					this.$set(this.productInfo,'select_type',this.productInfo.type_detail[0].text);
+				}
+				console.log(this.productInfo)
 			})
 		},
 		changeDetailTab : function(tab){
@@ -218,11 +230,44 @@ export default{
 			this.productInfo.select_size = item.size;
 		},
 		selectColor : function(item){
-			this.productInfo.select_color = item.color;
+			this.productInfo.select_type = item.color;
 		},
 		//添加购物车
 		addToCart:function(){
-			this.$router.push({ name: 'ShopCart', params: { id : this.productInfo.id , size : this.productInfo.select_size ,color : this.productInfo.select_color }})
+			// this.$router.push({ name: 'ShopCart', params: { id : this.productInfo.id , size : this.productInfo.select_size ,color : this.productInfo.select_type }})
+			let params = JSON.parse(JSON.stringify(this.productInfo));
+			params.user_id = this.$store.state.userInfo.id; //设置用户ID
+			params.images = JSON.stringify(params.images);
+			params.quantity = 1;
+			//获取改用户的购物车商品
+			axios.post(config.baseUrl + '/product/getCart',qs.stringify({user_id : params.user_id})).then(res=>{
+				console.log(res)
+				if(res.data.status == 0){
+					let cartList = res.data.data;
+					if(cartList.length>0){
+						cartList.forEach(function(value,key){
+							if(params.id == value.product_id && params.select_size == value.select_size && params.select_type == value.select_type){
+								params.quantity = value.quantity+1;
+								params.item_id = value.id;
+							}
+						})
+					}
+				}
+			}).then(function(){
+				//添加商品到购物车
+				if(params.quantity == 1){
+					axios.post(config.baseUrl + '/product/addToCart',qs.stringify(params)).then(res=>{
+						console.log(res);
+					})
+				}else{
+					axios.post(config.baseUrl + '/product/editToCart',qs.stringify(params)).then(res=>{
+						console.log(res);
+					})
+				}
+				
+			})
+			
+
 		}
 	}
 }

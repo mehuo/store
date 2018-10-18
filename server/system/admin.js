@@ -1,5 +1,5 @@
-var models = require('./db');
-var $sql = require('./sqlfun');
+var models = require('../db');
+var $sql = require('../sqlfun');
 var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
@@ -57,33 +57,27 @@ router.post('/addUser', function(req, res) {
 
 //登录操作
 router.post('/login',function(req,res){
-    console.log('-------------------------------login');
     var params =  req.body;
     connection.query(user_sql.login,[params.uname],function(err,result){
+        console.log(result);
         if(err){
             console.log('[select ERROR] - ',err.message);
             jsonWrite(res,{status:1,statusinfo:err.message});
             return;
         }
-        console.log('--------------------------SELECT----------------------------');
-        console.log(result);
         if(result.length  == 0){
             jsonWrite(res,{status:1,statusinfo:'用户名不存在'});
             return;
         }
         for(i = 0 ; i < result.length ; i++){
             if(result[i].password == params.password){
-                jsonWrite(res,{status:0,statusinfo:'登录成功',data:params});
+                jsonWrite(res,{status:0,statusinfo:'登录成功',data:result[0]});
             }else{
                 jsonWrite(res,{status:1,statusinfo:'密码不正确'});
                 return ;
             }
         }
-        
-        console.log('------------------------------------------------------------\n\n'); 
-
     })
-
 })
 
 

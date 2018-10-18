@@ -1,4 +1,4 @@
-var adminApi = require('./admin');
+var adminApi = require('./system/admin');
 var userApi = require('./system/user');
 var productApi = require('./product/index');
 var storeApi = require('./store/index');

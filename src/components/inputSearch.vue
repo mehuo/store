@@ -1,7 +1,7 @@
 <template>
 	<div class="page-search clearfix" :style="boxStyle">
         <div class="form-group">
-            <input type="search" placeholder="" value="" class="form-control" :style="inputStyle" placeholder="搜索关键字" v-model="keyword" @keyup.enter="search">
+            <input type="search" :style="inputStyle" placeholder="搜索关键字" v-model="keyword" @keyup.enter="search">
             <button class="btn search" :style="btnStyle" type="submit" @click="search">搜索</button>
         </div>
     </div>
@@ -69,6 +69,7 @@
 		    position: absolute;
 		    transform: translateX(-100%);
 		    left: 100%;
+		    border-radius:0;
 		}
 	}
 	/*搜索框 END*/

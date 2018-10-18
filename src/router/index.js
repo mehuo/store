@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import ShopCart from '@/pages/shopcart'
 import Address from '@/pages/address'
 
+//系统部分
+import Login from '@/pages/system/login'
 //商品部分
 import Product from '@/pages/product/product'
 import ProductDetail from '@/pages/product/details'
@@ -26,6 +28,12 @@ export default new Router({
       name: 'Product',
       component: Product
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    
     {
       path: '/store', //商铺模块
       name: 'store',
@@ -54,7 +62,7 @@ export default new Router({
       ]
     },
     {
-      path: '/productdetail?tag=:id',
+      path: '/productdetail',
       name: 'ProductDetail',
       component: ProductDetail
     },

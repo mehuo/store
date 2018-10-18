@@ -120,19 +120,40 @@ router.post('/delete',function(req,res){
 })
 
 //获取产品列表
+// shop_id 商品id 不存在是即查询所有商铺下商品
+// keyword 查询关键字
+// page_size 每页显示条数
+// page 当前页数
 router.post('/list',function(req,res){
     var params = req.body;
-    var shop_id = params.shop_id;
     var page_size = parseInt($sql.limit);
     if(params.page_size){
         page_size = parseInt(params.page_size);
     }
     var start = (parseInt(params.page)-1) * parseInt(page_size);
     var page_data = pageNation(0,parseInt(params.page),page_size,[]);
-    connection.query(sqls.total,[shop_id,'%'+params.keyword+'%',],function (err, result) {
+
+    var shop_id;
+    let total_sql;
+    let total_arr;
+    let list_sql;
+    let list_arr;
+    if(params.shop_id){
+        shop_id = params.shop_id;
+        total_sql = sqls.totalByShop;
+        total_arr = [shop_id,'%'+params.keyword+'%'];
+        list_sql = sqls.listByShop;
+        list_arr = [shop_id,'%'+params.keyword+'%',start,page_size] 
+    }else{
+        total_sql = sqls.total;
+        total_arr = ['%'+params.keyword+'%'];
+        list_sql = sqls.list;
+        list_arr = ['%'+params.keyword+'%',start,page_size] 
+    }
+    connection.query(total_sql , total_arr ,function (err, result) {
         fail(err,res);
         page_data = setPageNation(page_data ,'total',result[0].total);
-        connection.query(sqls.list , [shop_id,'%'+params.keyword+'%',start,page_size],function (err, result) {
+        connection.query(list_sql , list_arr ,function (err, result) {
             fail(err);
             let resultData = result;
             for (var i = 0; i < resultData.length; i++) {
@@ -140,7 +161,6 @@ router.post('/list',function(req,res){
                 if(resultData[i].part_ids){
                     let part_ids = JSON.parse(resultData[i].part_ids);
                     for (var j = 0; j < part_ids.length; j++) {
-                        console.log('id------'+part_ids[i])
                         connection.query(sqls.getThis,[part_ids[j]],function(err1,result1){
                             console.log(result1);
                             if(resultData[i] && resultData[i].partProduct){
@@ -162,11 +182,24 @@ router.post('/list',function(req,res){
     });  
 })
 
-//获取该商铺下所有商品
-router.post('/all',function(req,res){
+//获取该商铺下所有商品不分页
+// 参数 
+// shop_id 商品id 不存在是即查询所有商铺下商品
+// keyword 查询关键字
+router.post('/allBy',function(req,res){
     var params = req.body;
-    var shop_id = params.shop_id;
-    connection.query(sqls.all , [shop_id,'%'+params.keyword+'%'],function (err, result) {
+    let shop_id;
+    let list_sql;
+    let params_arr;
+    if(params.shop_id){
+        shop_id = params.shop_id;
+        list_sql = sqls.allByShopId;
+        params_arr = [shop_id,'%'+params.keyword+'%'];
+    }else{
+        list_sql = sqls.allBySearch;
+        params_arr = ['%'+params.keyword+'%'];
+    }
+    connection.query(list_sql,params_arr,function (err, result) {
         fail(err);
         jsonWrite(res,{
             status:0,
@@ -190,5 +223,75 @@ router.post('/getThis',function(req,res){
         });
     })
 })
+
+
+//获取购物车中商品
+router.post('/getCart',function(req,res){
+    let params = req.body;
+    connection.query(sqls.getCart,[params.user_id],function(err,result){
+        console.log(result);
+        fail(err,res);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result
+        });
+        res.end();
+    })
+})
+
+//添加商品到购物车
+router.post('/addToCart',function(req,res){
+    let params = req.body;
+    let params_arr = [
+        params.user_id,
+        params.shop_id,
+        params.id,
+        params.shop_name,
+        params.shop_address,
+        params.name,
+        params.price,
+        params.images,
+        params.part_ids,
+        params.select_size,
+        params.select_type,
+        params.quantity,
+        new Date(),
+        new Date(),
+        0
+    ];
+    connection.query(sqls.addCart,params_arr,function(err,result){
+        console.log(result);
+        fail(err,res);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result
+        });
+        res.end();
+    })
+})
+
+//编辑购物车中的商品
+router.post('/editToCart',function(req,res){
+    let params = req.body;
+    console.log(params.quantity,params.id);
+    let params_arr = [
+        params.quantity,
+        new Date(),
+        params.item_id
+    ];
+    connection.query(sqls.editCart,params_arr,function(err,result){
+        // console.log(result);
+        fail(err,res);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result
+        });
+        res.end();
+    })
+})
+
 
 module.exports = router;

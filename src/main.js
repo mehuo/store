@@ -6,6 +6,7 @@ import router from './router'
 import VueResource from 'vue-resource'; 
 import filters from '@/filters/filters.js';
 import ElementUI from 'element-ui';
+import store from './store'
 
 Vue.use(VueResource)
 Vue.use(ElementUI)
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -21,6 +21,10 @@ body{
 .fr{
   float: right;
 }
+.text-center{
+  text-align: center;
+}
+
 #app {
   position:relative;
 }
@@ -33,6 +37,7 @@ aside{
 .menu{
     width: 100%;
     height: 60px;
+    background: #fff;
     position: fixed;
     padding: 0 24px;
     top: 0;
@@ -147,6 +152,7 @@ table tbody .btn a{
 
 /*分页 BEGIN*/
 .pagination{
+  display: block;
   text-align: center;
   margin-top: 30px;
   margin-bottom: 30px;
