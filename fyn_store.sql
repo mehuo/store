@@ -11,7 +11,7 @@
  Target Server Version : 100129
  File Encoding         : 65001
 
- Date: 12/10/2018 18:04:05
+ Date: 19/10/2018 17:28:38
 */
 
 SET NAMES utf8mb4;
@@ -3591,6 +3591,76 @@ INSERT INTO `province` VALUES (34, '820000', '澳  门');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for t_cart
+-- ----------------------------
+DROP TABLE IF EXISTS `t_cart`;
+CREATE TABLE `t_cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `shop_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `shop_name` varchar(255) DEFAULT NULL,
+  `shop_address` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `images` text,
+  `part_ids` varchar(255) DEFAULT NULL,
+  `select_size` varchar(255) DEFAULT NULL,
+  `select_type` varchar(255) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_delete` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_cart
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_cart` VALUES (1, 1, 1, 2, '拉夏贝尔官方旗舰', '北京市 北京市 东城区', '面包羽绒服女士拉夏贝尔2018冬季新款韩版宽松白鸭绒轻薄短款外套', 279.00, '[\"https://img.alicdn.com/imgextra/i2/2146742267/O1CN011ScKLYSzVBMWi7S_!!0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLPwG0L5cWH1_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLPwH4iKBotr_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLQxaIxhz6od_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/TB2vlt2sCcqBKNjSZFgXXX_kXXa_!!2146742267.jpg_430x430q90.jpg\"]', '', 's', '粉色', 1, '2018-10-18 17:25:35', '2018-10-19 15:42:50', '0');
+INSERT INTO `t_cart` VALUES (2, 1, 2, 4, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '[\"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/1745678973/TB293hcjbsrBKNjSZFpXXcXhFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/1745678973/TB26V2drm8YBeNkSnb4XXaevFXa_!!1745678973.jpg_430x430q90.jpg\"]', '', 'L', '蓝色', 1, '2018-10-19 11:03:55', '2018-10-19 11:03:55', '0');
+INSERT INTO `t_cart` VALUES (3, 1, 2, 4, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '[\"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/1745678973/TB293hcjbsrBKNjSZFpXXcXhFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/1745678973/TB26V2drm8YBeNkSnb4XXaevFXa_!!1745678973.jpg_430x430q90.jpg\"]', '', 'S', '粉色', 1, '2018-10-19 11:04:40', '2018-10-19 15:42:47', '0');
+INSERT INTO `t_cart` VALUES (5, 1, 3, 8, 'poemlady旗舰店', '北京市 北京市 海淀区', '长裙女夏装2018新款pp home心机sukol裙子小清新设计感吊带连衣裙', 148.00, '[\"https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/3377403522/TB2cSuLJkSWBuNjSszdXXbeSpXa_!!3377403522-0-item_pic.jpg_460x460Q90.jpg_.webp\"]', '', 'S', NULL, 1, '2018-10-19 15:37:17', '2018-10-19 15:37:22', '0');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_order
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order`;
+CREATE TABLE `t_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `order_detail_id` int(11) DEFAULT NULL,
+  `order_price` decimal(10,2) DEFAULT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for t_order_product
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order_product`;
+CREATE TABLE `t_order_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL COMMENT '订单id',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  `product_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `product_name` varchar(255) DEFAULT NULL COMMENT '商品名称',
+  `product_price` decimal(10,2) DEFAULT NULL COMMENT '商品价格',
+  `product_quantity` varchar(255) DEFAULT NULL COMMENT '商品数量',
+  `select_size` double DEFAULT NULL COMMENT '商品分类（尺寸）',
+  `select_type` varchar(255) DEFAULT NULL COMMENT '商品分类（类型）',
+  `product_status` varchar(255) DEFAULT NULL COMMENT '商品状态',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `is_delete` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for t_product
 -- ----------------------------
 DROP TABLE IF EXISTS `t_product`;
@@ -3609,7 +3679,7 @@ CREATE TABLE `t_product` (
   `update_time` datetime DEFAULT NULL,
   `is_delete` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_product
@@ -3629,6 +3699,7 @@ INSERT INTO `t_product` VALUES (12, '牛仔裤女拉夏贝尔2018秋新款冬韩
 INSERT INTO `t_product` VALUES (13, '毛呢外套女百搭翻领双排扣上衣女', 2, 489, '[{\"text\":\"s\"},{\"text\":\"m\"},{\"text\":\"l\"},{\"text\":\"xl\"}]', '[{\"text\":\"灰粉\"},{\"text\":\"灰蓝\"},{\"text\":\"驼色\"}]', '\"\"', '[\"https://img.alicdn.com/imgextra/i3/2146742267/O1CN011ScKLYNRZLjjKxn_!!0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/2146742267/O1CN011ScKLPrO5lN3gwu_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLMXAsrrdo5Z_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLNQzUsAYyRq_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLMGfY95BgtU_!!2146742267.jpg_430x430q90.jpg\"]', '', '[\"大衣\"]', '2018-10-12 17:38:44', '2018-10-12 17:38:44', '0');
 INSERT INTO `t_product` VALUES (14, '毛呢外套女百搭翻领双排扣上衣女', 3, 489, '[{\"text\":\"s\"},{\"text\":\"m\"},{\"text\":\"l\"},{\"text\":\"xl\"}]', '[{\"text\":\"灰粉\"},{\"text\":\"灰蓝\"},{\"text\":\"驼色\"}]', '\"\"', '[\"https://img.alicdn.com/imgextra/i3/2146742267/O1CN011ScKLYNRZLjjKxn_!!0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/2146742267/O1CN011ScKLPrO5lN3gwu_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLMXAsrrdo5Z_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLNQzUsAYyRq_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLMGfY95BgtU_!!2146742267.jpg_430x430q90.jpg\"]', '', '[\"大衣\"]', '2018-10-12 17:39:55', '2018-10-12 17:39:55', '0');
 INSERT INTO `t_product` VALUES (15, '毛呢外套女百搭翻领双排扣上衣女', 1, 489, '[{\"text\":\"s\"},{\"text\":\"m\"},{\"text\":\"l\"},{\"text\":\"xl\"}]', '[{\"text\":\"灰粉\"},{\"text\":\"灰蓝\"},{\"text\":\"驼色\"}]', '[]', '[\"https://img.alicdn.com/imgextra/i3/2146742267/O1CN011ScKLYNRZLjjKxn_!!0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/2146742267/O1CN011ScKLPrO5lN3gwu_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLMXAsrrdo5Z_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLNQzUsAYyRq_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLMGfY95BgtU_!!2146742267.jpg_430x430q90.jpg\"]', '', '[\"大衣\",\"毛呢\"]', '2018-10-12 17:40:34', '2018-10-12 09:40:34', '0');
+INSERT INTO `t_product` VALUES (16, '花园1区', 4, 100000000, '[{\"text\":\"400平\"}]', '[{\"text\":\"别墅\"}]', '[]', '[\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539944925092&di=ceb017762034fa917dbf1e207ffef6e8&imgtype=0&src=http%3A%2F%2Fpic39.photophoto.cn%2F20160614%2F1155115733803194_b.jpg\",\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539944925092&di=ef9614c59748222811dd4ff82dbc987e&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171227%2F4e9d91a193f4416b95b59160cb339f8a.jpeg\",\"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539944925092&di=aab4942a805804e105ab84634d216cf0&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01bc61564c1d756ac7251c9446d084.jpg%401280w_1l_2o_100sh.jpg\"]', '<p>海边大别墅</p>', '[\"房子\",\"别墅\"]', '2018-10-19 15:39:22', '2018-10-19 07:39:22', '0');
 COMMIT;
 
 -- ----------------------------
@@ -3643,7 +3714,7 @@ CREATE TABLE `t_store` (
   `update_time` datetime DEFAULT NULL,
   `is_delete` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_store
@@ -3652,6 +3723,30 @@ BEGIN;
 INSERT INTO `t_store` VALUES (1, '拉夏贝尔官方旗舰', '北京市 北京市 东城区', '2018-10-12 16:42:15', '2018-10-12 16:42:15', '0');
 INSERT INTO `t_store` VALUES (2, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '2018-10-12 16:55:15', '2018-10-12 16:55:15', '0');
 INSERT INTO `t_store` VALUES (3, 'poemlady旗舰店', '北京市 北京市 海淀区', '2018-10-12 17:01:20', '2018-10-12 17:01:20', '0');
+INSERT INTO `t_store` VALUES (4, '玉晓的商铺', '山东省 日照市 莒　县', '2018-10-19 15:37:58', '2018-10-19 15:37:58', '0');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for t_user
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user`;
+CREATE TABLE `t_user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `role` int(5) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_delete` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_user
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_user` VALUES (1, 'fuyanan', '1', 1, '2018-04-02 22:26:51', '2018-04-02 22:26:51', 0);
+INSERT INTO `t_user` VALUES (2, 'liuyiyang', '1', 1, '2018-04-02 22:29:10', '2018-04-02 22:29:10', 0);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import ShopCart from '@/pages/shopcart'
 import Address from '@/pages/address'
 
 //系统部分
@@ -10,13 +9,16 @@ import Login from '@/pages/system/login'
 import Product from '@/pages/product/product'
 import ProductDetail from '@/pages/product/details'
 
-
 //商铺部分
 import Store from '@/pages/store/index'
 import StoreList from '@/pages/store/list'
 import AddStore from '@/pages/store/addStore'
 import AddProduct from '@/pages/store/addProduct'
 import ProductList from '@/pages/store/productList'
+
+//订单部分包括购物车
+import ShopCart from '@/pages/order/shopcart'
+
 
 
 Vue.use(Router)
@@ -33,7 +35,21 @@ export default new Router({
       name: 'login',
       component: Login
     },
-    
+    {
+      path: '/productdetail',
+      name: 'ProductDetail',
+      component: ProductDetail
+    },
+    {
+      path: '/shopcart',
+      name: 'ShopCart',
+      component: ShopCart
+    },
+    {
+      path: '/address',
+      name: 'Address',
+      component: Address
+    },
     {
       path: '/store', //商铺模块
       name: 'store',
@@ -60,21 +76,6 @@ export default new Router({
           component: ProductList
         }
       ]
-    },
-    {
-      path: '/productdetail',
-      name: 'ProductDetail',
-      component: ProductDetail
-    },
-    {
-      path: '/shopcart?tag=:id&size=:size&color=:color',
-      name: 'ShopCart',
-      component: ShopCart
-    },
-    {
-      path: '/address',
-      name: 'Address',
-      component: Address
     }
   ]
 })

@@ -213,7 +213,7 @@ export default{
 			})
 		},
 		goDetail:function(item){
-			this.$router.push({path:'ProductDetail', query:{id:item.id}});
+			this.$router.push({path:'/productdetail', query:{id:item.id}});
 		},
 		changeType:function(type){
 			this.currentType = type;

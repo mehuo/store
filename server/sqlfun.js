@@ -30,6 +30,7 @@ var sqlMap = {
         addCart : 'INSERT INTO t_cart(user_id,shop_id,product_id,shop_name,shop_address,name,price,images,part_ids,select_size,select_type,quantity,create_time,update_time,is_delete) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
         getCart : 'SELECT * FROM t_cart WHERE user_id = ?',
         editCart : 'UPDATE t_cart SET quantity = ?,update_time=? WHERE id = ?',
+        delCart : 'DELETE FROM t_cart WHERE id = ? AND user_id = ? '
     },
     util:{
         province : 'SELECT * FROM province;',

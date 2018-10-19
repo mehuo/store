@@ -229,7 +229,6 @@ router.post('/getThis',function(req,res){
 router.post('/getCart',function(req,res){
     let params = req.body;
     connection.query(sqls.getCart,[params.user_id],function(err,result){
-        console.log(result);
         fail(err,res);
         jsonWrite(res,{
             status:0,
@@ -261,7 +260,6 @@ router.post('/addToCart',function(req,res){
         0
     ];
     connection.query(sqls.addCart,params_arr,function(err,result){
-        console.log(result);
         fail(err,res);
         jsonWrite(res,{
             status:0,
@@ -275,7 +273,7 @@ router.post('/addToCart',function(req,res){
 //编辑购物车中的商品
 router.post('/editToCart',function(req,res){
     let params = req.body;
-    console.log(params.quantity,params.id);
+    console.log(params.quantity,params.item_id);
     let params_arr = [
         params.quantity,
         new Date(),
@@ -283,6 +281,20 @@ router.post('/editToCart',function(req,res){
     ];
     connection.query(sqls.editCart,params_arr,function(err,result){
         // console.log(result);
+        fail(err,res);
+        jsonWrite(res,{
+            status:0,
+            statusinfo:'请求成功',
+            data:result
+        });
+        res.end();
+    })
+})
+
+//删除购物车中的记录
+router.post('/delCart',function(req,res){
+    let params = req.body;
+    connection.query(sqls.delCart,[params.id,params.user_id],function(err,result){
         fail(err,res);
         jsonWrite(res,{
             status:0,

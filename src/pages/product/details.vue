@@ -227,21 +227,20 @@ export default{
 			this.detailTab = tab;
 		},
 		selectSize : function(item){
-			this.productInfo.select_size = item.size;
+			this.productInfo.select_size = item.text;
 		},
 		selectColor : function(item){
-			this.productInfo.select_type = item.color;
+			this.productInfo.select_type = item.text;
 		},
 		//添加购物车
 		addToCart:function(){
-			// this.$router.push({ name: 'ShopCart', params: { id : this.productInfo.id , size : this.productInfo.select_size ,color : this.productInfo.select_type }})
+			let that = this;
 			let params = JSON.parse(JSON.stringify(this.productInfo));
 			params.user_id = this.$store.state.userInfo.id; //设置用户ID
 			params.images = JSON.stringify(params.images);
 			params.quantity = 1;
 			//获取改用户的购物车商品
 			axios.post(config.baseUrl + '/product/getCart',qs.stringify({user_id : params.user_id})).then(res=>{
-				console.log(res)
 				if(res.data.status == 0){
 					let cartList = res.data.data;
 					if(cartList.length>0){
@@ -257,14 +256,18 @@ export default{
 				//添加商品到购物车
 				if(params.quantity == 1){
 					axios.post(config.baseUrl + '/product/addToCart',qs.stringify(params)).then(res=>{
-						console.log(res);
+						if(res.data.status == 0){
+							that.$router.push({path : '/shopcart'});
+						}
 					})
 				}else{
 					axios.post(config.baseUrl + '/product/editToCart',qs.stringify(params)).then(res=>{
 						console.log(res);
+						if(res.data.status == 0){
+							that.$router.push({path : '/shopcart'});
+						}
 					})
 				}
-				
 			})
 			
 
