@@ -11,7 +11,7 @@
  Target Server Version : 100129
  File Encoding         : 65001
 
- Date: 19/10/2018 17:28:38
+ Date: 26/10/2018 17:50:55
 */
 
 SET NAMES utf8mb4;
@@ -3591,6 +3591,35 @@ INSERT INTO `province` VALUES (34, '820000', '澳  门');
 COMMIT;
 
 -- ----------------------------
+-- Table structure for t_address
+-- ----------------------------
+DROP TABLE IF EXISTS `t_address`;
+CREATE TABLE `t_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `is_default` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_address
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_address` VALUES (1, 1, '北京市昌平区回龙观街道新龙城一期对面如家家园', '付亚男', '18610942018', '0', '2018-10-23 16:03:49', '2018-10-23 16:20:37', '0');
+INSERT INTO `t_address` VALUES (2, 1, '北京市昌平区回龙观庆龙公寓楼', '付亚男', '18610942018', '0', '2018-10-23 16:09:05', '2018-10-23 16:09:57', '0');
+INSERT INTO `t_address` VALUES (3, 1, '北京市密云区康居南一区3号楼1单元602', '付亚男', '18610942018', '1', '2018-10-23 16:14:19', '2018-10-23 16:20:37', '0');
+INSERT INTO `t_address` VALUES (4, 1, '北京市朝阳区北京工业大学理科楼m906', '付亚男', '18610942018', '0', '2018-10-23 16:21:10', '2018-10-23 16:21:10', '0');
+INSERT INTO `t_address` VALUES (5, 1, '北京市昌平区龙泽地铁站', '付亚男', '18610942018', '0', '2018-10-23 16:22:08', '2018-10-23 16:22:08', '0');
+INSERT INTO `t_address` VALUES (6, 1, '北京市昌平区回龙观龙华园小区', '付亚男', '18611118888', '0', '2018-10-23 16:22:23', '2018-10-23 16:48:10', '0');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for t_cart
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cart`;
@@ -3619,7 +3648,7 @@ CREATE TABLE `t_cart` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `t_cart` VALUES (1, 1, 1, 2, '拉夏贝尔官方旗舰', '北京市 北京市 东城区', '面包羽绒服女士拉夏贝尔2018冬季新款韩版宽松白鸭绒轻薄短款外套', 279.00, '[\"https://img.alicdn.com/imgextra/i2/2146742267/O1CN011ScKLYSzVBMWi7S_!!0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/2146742267/O1CN011ScKLPwG0L5cWH1_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLPwH4iKBotr_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/O1CN011ScKLQxaIxhz6od_!!2146742267.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/2146742267/TB2vlt2sCcqBKNjSZFgXXX_kXXa_!!2146742267.jpg_430x430q90.jpg\"]', '', 's', '粉色', 1, '2018-10-18 17:25:35', '2018-10-19 15:42:50', '0');
-INSERT INTO `t_cart` VALUES (2, 1, 2, 4, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '[\"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/1745678973/TB293hcjbsrBKNjSZFpXXcXhFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/1745678973/TB26V2drm8YBeNkSnb4XXaevFXa_!!1745678973.jpg_430x430q90.jpg\"]', '', 'L', '蓝色', 1, '2018-10-19 11:03:55', '2018-10-19 11:03:55', '0');
+INSERT INTO `t_cart` VALUES (2, 1, 2, 4, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '[\"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/1745678973/TB293hcjbsrBKNjSZFpXXcXhFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/1745678973/TB26V2drm8YBeNkSnb4XXaevFXa_!!1745678973.jpg_430x430q90.jpg\"]', '', 'L', '蓝色', 2, '2018-10-19 11:03:55', '2018-10-25 10:36:48', '0');
 INSERT INTO `t_cart` VALUES (3, 1, 2, 4, 'Mind Bridge', '内蒙古 赤峰市 喀喇沁旗', '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '[\"https://img.alicdn.com/imgextra/i2/1745678973/TB23EgnzDlYBeNjSszcXXbwhFXa_!!1745678973-0-item_pic.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i2/1745678973/TB2q7k6i8jTBKNjSZFuXXb0HFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i4/1745678973/TB293hcjbsrBKNjSZFpXXcXhFXa_!!1745678973.jpg_430x430q90.jpg\",\"https://img.alicdn.com/imgextra/i1/1745678973/TB26V2drm8YBeNkSnb4XXaevFXa_!!1745678973.jpg_430x430q90.jpg\"]', '', 'S', '粉色', 1, '2018-10-19 11:04:40', '2018-10-19 15:42:47', '0');
 INSERT INTO `t_cart` VALUES (5, 1, 3, 8, 'poemlady旗舰店', '北京市 北京市 海淀区', '长裙女夏装2018新款pp home心机sukol裙子小清新设计感吊带连衣裙', 148.00, '[\"https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/3377403522/TB2cSuLJkSWBuNjSszdXXbeSpXa_!!3377403522-0-item_pic.jpg_460x460Q90.jpg_.webp\"]', '', 'S', NULL, 1, '2018-10-19 15:37:17', '2018-10-19 15:37:22', '0');
 COMMIT;
@@ -3631,13 +3660,30 @@ DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `order_detail_id` int(11) DEFAULT NULL,
-  `order_price` decimal(10,2) DEFAULT NULL,
+  `order_price` decimal(10,2) DEFAULT NULL COMMENT '订单价格',
+  `order_status` varchar(255) DEFAULT NULL COMMENT '订单状态',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `is_delete` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_delete` varchar(255) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_order` VALUES (1, 1, 595.00, NULL, '2018-10-25 11:42:51', '2018-10-25 11:42:51', '0');
+INSERT INTO `t_order` VALUES (2, 1, 595.00, '1', '2018-10-25 14:08:38', '2018-10-25 14:08:38', '0');
+INSERT INTO `t_order` VALUES (3, 1, 595.00, '1', '2018-10-25 17:36:56', '2018-10-25 17:36:56', '0');
+INSERT INTO `t_order` VALUES (4, 1, 595.00, '1', '2018-10-25 17:38:24', '2018-10-25 17:38:24', '0');
+INSERT INTO `t_order` VALUES (5, 1, 595.00, '1', '2018-10-25 17:42:04', '2018-10-25 17:42:04', '0');
+INSERT INTO `t_order` VALUES (6, 1, 595.00, '1', '2018-10-25 17:43:54', '2018-10-25 17:43:54', '0');
+INSERT INTO `t_order` VALUES (7, 1, 595.00, '1', '2018-10-25 17:46:14', '2018-10-25 17:46:14', '0');
+INSERT INTO `t_order` VALUES (8, 1, 595.00, '1', '2018-10-25 17:46:35', '2018-10-25 17:46:35', '0');
+INSERT INTO `t_order` VALUES (9, 1, 595.00, '1', '2018-10-25 17:47:59', '2018-10-25 17:47:59', '0');
+INSERT INTO `t_order` VALUES (10, 1, 595.00, '1', '2018-10-25 17:48:59', '2018-10-25 17:48:59', '0');
+INSERT INTO `t_order` VALUES (11, 1, 595.00, '1', '2018-10-25 17:50:13', '2018-10-25 17:50:13', '0');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_order_product
@@ -3655,10 +3701,22 @@ CREATE TABLE `t_order_product` (
   `select_type` varchar(255) DEFAULT NULL COMMENT '商品分类（类型）',
   `product_status` varchar(255) DEFAULT NULL COMMENT '商品状态',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `is_delete` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `is_delete` varchar(255) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order_product
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_order_product` VALUES (1, 9, 1, 2, '面包羽绒服女士拉夏贝尔2018冬季新款韩版宽松白鸭绒轻薄短款外套', 279.00, '1', 0, '粉色', NULL, '2018-10-25 17:47:59', '2018-10-25 17:47:59', '1');
+INSERT INTO `t_order_product` VALUES (2, 9, 1, 4, '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '2', 0, '蓝色', NULL, '2018-10-25 17:47:59', '2018-10-25 17:47:59', '1');
+INSERT INTO `t_order_product` VALUES (3, 10, 1, 2, '面包羽绒服女士拉夏贝尔2018冬季新款韩版宽松白鸭绒轻薄短款外套', 279.00, '1', 0, '粉色', '1', '2018-10-25 17:48:59', '2018-10-25 17:48:59', '1');
+INSERT INTO `t_order_product` VALUES (4, 10, 1, 4, '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '2', 0, '蓝色', '1', '2018-10-25 17:48:59', '2018-10-25 17:48:59', '1');
+INSERT INTO `t_order_product` VALUES (5, 11, 1, 2, '面包羽绒服女士拉夏贝尔2018冬季新款韩版宽松白鸭绒轻薄短款外套', 279.00, '1', 0, '粉色', '1', '2018-10-25 17:50:13', '2018-10-25 17:50:13', '0');
+INSERT INTO `t_order_product` VALUES (6, 11, 1, 4, '连衣裙女夏2018新款韩版两件套心机套装小清新中长款气质超仙裙子', 158.00, '2', 0, '蓝色', '1', '2018-10-25 17:50:13', '2018-10-25 17:50:13', '0');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for t_product

@@ -32,6 +32,18 @@ var sqlMap = {
         editCart : 'UPDATE t_cart SET quantity = ?,update_time=? WHERE id = ?',
         delCart : 'DELETE FROM t_cart WHERE id = ? AND user_id = ? '
     },
+    order:{
+        add : 'INSERT INTO t_order(user_id,order_price,order_status) values(?,?,?);',
+        productAdd : 'INSERT INTO t_order_product(order_id,user_id,product_id,product_name,product_price,product_quantity,select_size,select_type,product_status) values (?,?,?,?,?,?,?,?,?)'
+    },
+    address :{
+        add: 'INSERT INTO t_address(user_id,address,name,phone,is_default,is_delete) values (?,?,?,?,?,?);',
+        list: 'SELECT * FROM t_address WHERE user_id = ?;',
+        clearDefault : 'UPDATE t_address SET is_default = 0 WHERE user_id = ? AND is_default = 1',
+        setDefault : 'UPDATE t_address SET is_default = 1 WHERE user_id = ? AND id = ?',
+        delete : 'DELETE FROM t_address  WHERE user_id = ? AND id = ?',
+        edit : 'UPDATE t_address SET address = ?,name =?,phone=? WHERE user_id = ? AND id=?'
+    },
     util:{
         province : 'SELECT * FROM province;',
         city : 'SELECT * FROM city WHERE provincecode = ?;',

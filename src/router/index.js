@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Address from '@/pages/address'
 
 //系统部分
 import Login from '@/pages/system/login'
@@ -18,6 +16,7 @@ import ProductList from '@/pages/store/productList'
 
 //订单部分包括购物车
 import ShopCart from '@/pages/order/shopcart'
+import Order from '@/pages/order/order'
 
 
 
@@ -46,9 +45,9 @@ export default new Router({
       component: ShopCart
     },
     {
-      path: '/address',
-      name: 'Address',
-      component: Address
+      path: '/order',
+      name: 'Order',
+      component: Order
     },
     {
       path: '/store', //商铺模块

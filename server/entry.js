@@ -2,6 +2,8 @@ var adminApi = require('./system/admin');
 var userApi = require('./system/user');
 var productApi = require('./product/index');
 var storeApi = require('./store/index');
+var orderApi = require('./order/index');
+var addressApi = require('./order/address');
 var utilApi = require('./utils/index');
 var fs = require('fs');
 var path = require('path');
@@ -29,6 +31,8 @@ app.use('/admin', adminApi);
 app.use('/system/user', userApi);
 app.use('/product', productApi);
 app.use('/store', storeApi);
+app.use('/order', orderApi);
+app.use('/address', addressApi);
 
 // 监听端口
 app.listen(8888);

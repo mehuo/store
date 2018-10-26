@@ -121,7 +121,7 @@ export default{
 		window.localStorage.setItem(name,value);
 	},
 	_getItem : function(name){
-		window.localStorage.getTime(name);
+		return window.localStorage.getItem(name);
 	},
 	_delItem : function(name){
 		window.localStorage.removeItem(name);

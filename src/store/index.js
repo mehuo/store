@@ -6,7 +6,17 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     isLogin: util._getCookie('isLogin'),
-    userInfo : JSON.parse(util._getCookie('userInfo'))
+    userInfo : JSON.parse(util._getCookie('userInfo')),
+    commit_products : util._getItem('commit_products')
+  },
+  getters : {
+    order_products(state){
+      if(state.commit_products){
+        return JSON.parse(state.commit_products);
+      }else{
+        return []
+      }
+    }
   },
   mutations: {
     loginStatus (state,status) {
@@ -16,7 +26,14 @@ const store = new Vuex.Store({
     },
     setUserInfo (state,info){
     	util._setCookie('userInfo',JSON.stringify(info));
+    },
+    commitOrder(state,info){
+      state.commit_products = JSON.stringify(info);
+      util._setItem('commit_products',JSON.stringify(info));
     }
+  },
+  actions : {
+
   }
 });
 

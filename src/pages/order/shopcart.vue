@@ -296,12 +296,16 @@ export default {
     submitOrders:function(){
       console.log('准备提交订单');
       console.log(this.cartList);
+      let that = this;
       let products = [];
+      let product_cart_ids = [];
       this.cartList.forEach(function(value,key){
         if (value.check) {
           products.push(value);
         }
       })
+      this.$store.commit('commitOrder',products);
+      this.$router.push({path : '/order'})
     }
   }
 }
