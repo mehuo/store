@@ -294,8 +294,6 @@ export default {
     	}
     },
     submitOrders:function(){
-      console.log('准备提交订单');
-      console.log(this.cartList);
       let that = this;
       let products = [];
       let product_cart_ids = [];

@@ -295,7 +295,7 @@
 			</div>
 			<div class="title-line"><div class="title">配送地址</div></div>
 			<div class="addressList clearfix">
-				<div class="item" v-for="(item,index) in filterAddressList" :class="{active : currentIndex == index}" @click="currentIndex = index">
+				<div class="item" v-for="(item,index) in filterAddressList" :class="{active : curAddressId == item.id}" @click="curAddressId = item.id">
 					<div class="name">{{item.name}}</div>
 					<div class="path">{{item.address}}</div>
 					<div class="tel">{{item.phone}}</div>
@@ -317,14 +317,11 @@
 
 			<div class="title-line"><div class="title">配送方式</div></div>
 			<div class="sendway">
-				<div class="item"  :class="{active : currentSendWay == 1}" @click="currentSendWay = 1">
-					<div>标准配送</div>
-					<div>Free</div>
+				<div class="item" v-for="item in deliveryList" :class="{active : currentSendWay == item.id}" @click="currentSendWay = item.id">
+					<div>{{item.type}}</div>
+					<div>{{item.cost}}</div>
 				</div>
-				<div class="item" :class="{active : currentSendWay == 2}" @click="currentSendWay = 2">
-					<div>高级配送</div>
-					<div>¥180</div>			
-				</div>
+				
 			</div>
 
 			<div class="commit_order" @click="commitOrder">提交订单</div>
@@ -383,13 +380,15 @@ export default{
 			limitNum : 3,
 			addressIsOpen : false,
 			addressList : [],
-			currentIndex : 0,
-			currentSendWay : 1
+			deliveryList : [],
+			curAddressId : null,
+			currentSendWay : null
 		}
 	},
 	mounted(){
 		this.$nextTick(function(){
 			this.getAddressList();
+			this.getDeliveryList();
 		})
 	},
 	watch:{
@@ -418,6 +417,14 @@ export default{
 		
 	},
 	methods:{
+		getDeliveryList : function(){
+			let that = this;
+			axios.post(config.baseUrl + '/address/getDelivery').then(res=>{
+				console.log(res);
+				that.deliveryList = res.data.data;
+				that.currentSendWay = that.deliveryList[0].id;
+			})
+		},
 		openAddAddress :function(){
 			$('#myModal').modal('show');
 			this.addressInfo = {
@@ -471,6 +478,12 @@ export default{
 					that.addressList = res.data.data;
 					console.log(that.addressList);
 					that.limitNum = that.addressList.length;
+					that.addressList.forEach(function(value,key){
+						if(value.is_default == 1){
+							that.curAddressId = value.id;
+						}
+					})
+					
 				}
 			})
 		},
@@ -495,15 +508,20 @@ export default{
 			let that = this;
 			let params = {
 				user_id : this.userInfo.id,
+				address_id : this.curAddressId,
+				delivery_id : this.currentSendWay,
 				productList : this.order_products,
 				totalPrice : this.totalPrice,
 				status : 1
 			}
-			console.log(params)
-			// this.$store.commit('commitOrder',[]);
-			axios.post(config.baseUrl + '/order/add',qs.stringify(params)).then(res=>{
-				console.log(res);
-			})
+			console.log(params);
+			console.log(this.currentSendWay);
+			// axios.post(config.baseUrl + '/order/add',qs.stringify(params)).then(res=>{
+			// 	console.log(res);
+			// 	that.$store.commit('commitOrder',[]);
+			// 	let order_id = res.data.data.insertId;
+			// 	that.$router.push({path : '/pay',query: {id:order_id}})
+			// })
 		}
 	}
 

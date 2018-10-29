@@ -17,6 +17,7 @@ import ProductList from '@/pages/store/productList'
 //订单部分包括购物车
 import ShopCart from '@/pages/order/shopcart'
 import Order from '@/pages/order/order'
+import Pay from '@/pages/order/pay'
 
 
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/order',
       name: 'Order',
       component: Order
+    },
+    {
+      path: '/pay',
+      name: 'Pay',
+      component: Pay
     },
     {
       path: '/store', //商铺模块

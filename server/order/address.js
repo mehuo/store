@@ -134,6 +134,16 @@ router.post('/delete',function(req,res){
     });
 })
 
+//获取配送信息列表
+router.post('/getDelivery',function(req,res){
+    var params = req.body;
+    connection.query(sqls.getDelivery ,function (err, result) {
+        fail(err,res);
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result});
+        res.end();
+    });
+})
+
 
 
 

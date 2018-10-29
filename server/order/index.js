@@ -58,12 +58,35 @@ var setPageNation = function(data ,key , value){
     return data;
 }
 
+var _shuffUUID = function(){
+    //生成32位随机数
+    var dict = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    ];
+    var num = dict.length;
+    var uuid = "";
+    var sum = 0;
+    for (var i = 0; i < 31; i++) {
+        var idx = Math.floor(Math.random() * num);
+        var ch = dict[idx];
+        sum += ch.charCodeAt(0);
+        uuid += ch;
+    }
+    //生成校验位
+    uuid += String.fromCharCode((sum % 26 + 97));
+    return uuid;
+}
+
 
 //添加订单
 router.post('/add', function(req, res) {
     var params = req.body;
     connection.query(sqls.add , [
         params.user_id, //用户id
+        params.address_id, //地址ID
+        params.delivery_id, //配送方式
+        _shuffUUID(),//订单编号
         params.totalPrice, //订单价格
         params.status, //订单状态
     ],
@@ -71,8 +94,6 @@ router.post('/add', function(req, res) {
         fail(err,res);
         async.map(params.productList, function(item, callback) {
             let sql = sqls.productAdd;
-            console.log(item);
-            console.log(result.insertId);
             let paramsInfo = [
                 result.insertId,
                 params.user_id,
@@ -84,16 +105,43 @@ router.post('/add', function(req, res) {
                 item.select_type,
                 params.status
             ]
+            let delete_sql = $sql.product.delCart;
             connection.query(sql,paramsInfo, function(err,result1){
-                callback(null, item);
+                connection.query(delete_sql,[item.id,params.user_id],function(err,result2){
+                    callback(null, item);
+                })
             });
         }, function(err,results) {
             console.log(results);
         });
-
         jsonWrite(res,{status:0,statusinfo:result.message,data:result});
         res.end();
     });
 });
+
+//查看订单中的产品
+router.post('/getProducts',function(req,res){
+    var params = req.body;
+    console.log(params)
+    connection.query(sqls.getProducts,[params.order_id,params.user_id],function(err,result){
+        fail(err,res);
+        console.log(result);
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result});
+        res.end();
+    })
+});
+
+//获取订单详情
+router.post('/getInfo',function(req,res){
+    var params = req.body;
+    connection.query(sqls.getInfo,[params.order_id,params.user_id],function(err,result){
+        fail(err,res);
+        console.log(result);
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result});
+        res.end();
+    })
+});
+
+
 
 module.exports = router;

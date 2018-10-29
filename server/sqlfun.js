@@ -33,8 +33,10 @@ var sqlMap = {
         delCart : 'DELETE FROM t_cart WHERE id = ? AND user_id = ? '
     },
     order:{
-        add : 'INSERT INTO t_order(user_id,order_price,order_status) values(?,?,?);',
-        productAdd : 'INSERT INTO t_order_product(order_id,user_id,product_id,product_name,product_price,product_quantity,select_size,select_type,product_status) values (?,?,?,?,?,?,?,?,?)'
+        add : 'INSERT INTO t_order(user_id,address_id,delivery_id,code,order_price,order_status) values(?,?,?,?,?,?);',
+        productAdd : 'INSERT INTO t_order_product(order_id,user_id,product_id,product_name,product_price,product_quantity,select_size,select_type,product_status) values (?,?,?,?,?,?,?,?,?)',
+        getProducts : 'SELECT * FROM t_order_product WHERE order_id = ? AND user_id = ?',
+        getInfo : 'SELECT * FROM t_order WHERE id = ? AND user_id = ?'
     },
     address :{
         add: 'INSERT INTO t_address(user_id,address,name,phone,is_default,is_delete) values (?,?,?,?,?,?);',
@@ -42,7 +44,8 @@ var sqlMap = {
         clearDefault : 'UPDATE t_address SET is_default = 0 WHERE user_id = ? AND is_default = 1',
         setDefault : 'UPDATE t_address SET is_default = 1 WHERE user_id = ? AND id = ?',
         delete : 'DELETE FROM t_address  WHERE user_id = ? AND id = ?',
-        edit : 'UPDATE t_address SET address = ?,name =?,phone=? WHERE user_id = ? AND id=?'
+        edit : 'UPDATE t_address SET address = ?,name =?,phone=? WHERE user_id = ? AND id=?',
+        getDelivery : 'SELECT * FROM t_delivery'
     },
     util:{
         province : 'SELECT * FROM province;',
