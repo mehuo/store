@@ -144,6 +144,27 @@ router.post('/getDelivery',function(req,res){
     });
 })
 
+//根据id获取地址详情
+router.post('/getAddressInfo',function(req,res){
+    var params = req.body;
+    connection.query(sqls.getAddressInfo,[params.id],function (err, result) {
+        fail(err,res);
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result[0]});
+        res.end();
+    });
+})
+
+//根据id获取配送方式详情
+router.post('/getDeliveryInfo',function(req,res){
+    var params = req.body;
+    connection.query(sqls.getDeliveryInfo,[params.id],function (err, result) {
+        fail(err,res);
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result[0]});
+        res.end();
+    });
+})
+
+
 
 
 

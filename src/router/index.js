@@ -18,6 +18,7 @@ import ProductList from '@/pages/store/productList'
 import ShopCart from '@/pages/order/shopcart'
 import Order from '@/pages/order/order'
 import Pay from '@/pages/order/pay'
+import OrderList from '@/pages/order/list'
 
 
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/pay',
       name: 'Pay',
       component: Pay
+    },
+    {
+      path: '/orderlist',
+      name: 'OrderList',
+      component: OrderList
     },
     {
       path: '/store', //商铺模块

@@ -5,6 +5,7 @@
         <el-menu :router="true"  class="el-menu-demo fl" mode="horizontal" @select="handleSelect">
           <el-menu-item index="/">商城首页</el-menu-item>
           <el-menu-item index="/shopcart">购物车</el-menu-item>
+          <el-menu-item index="/orderlist">我的订单</el-menu-item>
           <el-menu-item index="/store/list">商铺管理</el-menu-item>
         </el-menu>
         <div class="fr">

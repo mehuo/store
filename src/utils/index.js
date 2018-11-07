@@ -1,10 +1,11 @@
 export default{
 	_dateFormat:function(date,format){
+		console.log(date)
 		// 时间格式数据格式化
 		// date：时间格式数据，必填
 		// format：按什么格式格式化 非必填
 		if(!format){
-			format = 'yyyy-MM-dd hh:ss:mm';
+			format = 'yyyy-MM-dd hh:mm:ss';
 		}
 		var o = { 
             "M+" : date.getMonth()+1,                 //月份 
@@ -23,6 +24,7 @@ export default{
                 format = format.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
             }
         }
+        console.log(format)
         return format;
 	},
 	_jsonp : function(url, success, fail, callbackName){

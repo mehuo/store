@@ -137,10 +137,45 @@ router.post('/getInfo',function(req,res){
     connection.query(sqls.getInfo,[params.order_id,params.user_id],function(err,result){
         fail(err,res);
         console.log(result);
-        jsonWrite(res,{status:0,statusinfo:result.message,data:result});
+        jsonWrite(res,{status:0,statusinfo:result.message,data:result[0]});
         res.end();
     })
 });
+
+//获取订单列表
+router.post('/list',function(req,res){
+    var params = req.body;
+    var page_size = parseInt($sql.limit);
+    if(params.page_size){
+        page_size = parseInt(params.page_size);
+    }
+    var start = (parseInt(params.page)-1) * parseInt(page_size);
+    var page_data = pageNation(0,parseInt(params.page),page_size,[]);
+    let totalParams = [
+        params.user_id,
+        params.order_status
+    ]
+    let listParams = [
+        params.user_id,
+        params.order_status,
+        start,
+        page_size
+    ]
+    connection.query(sqls.total ,totalParams,function (err, result) {
+        fail(err,res);
+        page_data = setPageNation(page_data ,'total',result[0].total);
+        connection.query(sqls.list , listParams,function (err, result) {
+            fail(err);
+            page_data = setPageNation(page_data ,'data' , result);
+            jsonWrite(res,{
+                status:0,
+                statusinfo:'',
+                data:page_data
+            });
+            res.end();
+        });
+    });  
+})
 
 
 

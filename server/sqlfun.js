@@ -36,7 +36,11 @@ var sqlMap = {
         add : 'INSERT INTO t_order(user_id,address_id,delivery_id,code,order_price,order_status) values(?,?,?,?,?,?);',
         productAdd : 'INSERT INTO t_order_product(order_id,user_id,product_id,product_name,product_price,product_quantity,select_size,select_type,product_status) values (?,?,?,?,?,?,?,?,?)',
         getProducts : 'SELECT * FROM t_order_product WHERE order_id = ? AND user_id = ?',
-        getInfo : 'SELECT * FROM t_order WHERE id = ? AND user_id = ?'
+        getInfo : 'SELECT * FROM t_order WHERE id = ? AND user_id = ?',
+        total : 'SELECT COUNT(*) total FROM t_order WHERE user_id = ? AND order_status = ?',
+        totalAll : 'SELECT COUNT(*) total FROM t_order WHERE user_id = ?',
+        list : 'SELECT * FROM t_order WHERE user_id = ? AND order_status = ? limit ?,?',
+        listAll : 'SELECT * FROM t_order WHERE user_id = ? limit ?,?'
     },
     address :{
         add: 'INSERT INTO t_address(user_id,address,name,phone,is_default,is_delete) values (?,?,?,?,?,?);',
@@ -45,7 +49,9 @@ var sqlMap = {
         setDefault : 'UPDATE t_address SET is_default = 1 WHERE user_id = ? AND id = ?',
         delete : 'DELETE FROM t_address  WHERE user_id = ? AND id = ?',
         edit : 'UPDATE t_address SET address = ?,name =?,phone=? WHERE user_id = ? AND id=?',
-        getDelivery : 'SELECT * FROM t_delivery'
+        getDelivery : 'SELECT * FROM t_delivery',
+        getAddressInfo : 'SELECT * FROM t_address WHERE id = ?',
+        getDeliveryInfo : 'SELECT * FROM t_delivery WHERE id = ?'
     },
     util:{
         province : 'SELECT * FROM province;',

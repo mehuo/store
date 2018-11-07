@@ -514,14 +514,11 @@ export default{
 				totalPrice : this.totalPrice,
 				status : 1
 			}
-			console.log(params);
-			console.log(this.currentSendWay);
-			// axios.post(config.baseUrl + '/order/add',qs.stringify(params)).then(res=>{
-			// 	console.log(res);
-			// 	that.$store.commit('commitOrder',[]);
-			// 	let order_id = res.data.data.insertId;
-			// 	that.$router.push({path : '/pay',query: {id:order_id}})
-			// })
+			axios.post(config.baseUrl + '/order/add',qs.stringify(params)).then(res=>{
+				that.$store.commit('commitOrder',[]);
+				let order_id = res.data.data.insertId;
+				that.$router.push({path : '/pay',query: {id:order_id}})
+			})
 		}
 	}
 
